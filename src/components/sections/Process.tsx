@@ -30,6 +30,25 @@ export function Process() {
         pin: true,
         scrub: 1,
         anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const maxIndex = Math.max(1, cards.length - 1);
+          
+          cards.forEach((card, i) => {
+            const target = i / maxIndex;
+            const distance = Math.abs(progress - target);
+            // Controls how quickly the card fades in/out (wider threshold = more overlap)
+            const threshold = 1.2 / maxIndex;
+            
+            let intensity = 1 - (distance / threshold);
+            intensity = Math.max(0, Math.min(1, intensity)); // Clamp 0-1
+            
+            gsap.set(card, { 
+              opacity: 0.3 + (0.7 * intensity),
+              scale: 0.95 + (0.05 * intensity)
+            });
+          });
+        }
       },
     });
 
@@ -51,24 +70,6 @@ export function Process() {
         },
       });
     }
-
-    // Card reveals
-    cards.forEach((card, i) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0.3, scale: 0.95 },
-        {
-          opacity: 1,
-          scale: 1,
-          scrollTrigger: {
-            trigger: container,
-            start: `${(i / cards.length) * 80}% top`,
-            end: `${((i + 1) / cards.length) * 80}% top`,
-            scrub: 1,
-          },
-        }
-      );
-    });
   });
 
   return (

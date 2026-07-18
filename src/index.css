@@ -11,8 +11,8 @@
     --deep:        #0C0C10;
     --surface:     #141419;
     --elevated:    #1C1C24;
-    --signal:      #E5FF50;
-    --signal-dim:  #C8E036;
+    --signal:      #FFD200;
+    --signal-dim:  #E6BD00;
     --warm:        #FF6B35;
 
     --text-primary:   #FAFAFA;
@@ -62,7 +62,7 @@
   }
 
   ::selection {
-    background: rgba(229, 255, 80, 0.2);
+    background: rgba(255, 210, 0, 0.2);
     color: #fff;
   }
 }

@@ -2,14 +2,16 @@ import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture, Environment, RoundedBox, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
+import { useInView } from 'framer-motion';
 
 interface Phone3DProps {
   imageSrc: string;
   className?: string;
 }
 
-function PhoneModel({ imageSrc }: { imageSrc: string }) {
+function PhoneModel({ imageSrc, isVisible }: { imageSrc: string; isVisible: boolean }) {
   const meshRef = useRef<THREE.Group>(null);
+  const startTimeRef = useRef<number | null>(null);
   const texture = useTexture(imageSrc);
   
   // The AI image is a square (1:1) mockup with a huge grey studio background.
@@ -23,9 +25,16 @@ function PhoneModel({ imageSrc }: { imageSrc: string }) {
 
   useFrame((state) => {
     if (meshRef.current) {
-      const t = state.clock.getElapsedTime();
+      if (isVisible && startTimeRef.current === null) {
+        startTimeRef.current = state.clock.getElapsedTime();
+      }
+
+      const t = isVisible && startTimeRef.current !== null
+        ? state.clock.getElapsedTime() - startTimeRef.current
+        : 0;
+
       meshRef.current.position.y = Math.sin(t * 1.5) * 0.1;
-      meshRef.current.rotation.y = t * 0.3;
+      meshRef.current.rotation.y = t * -0.3;
       meshRef.current.rotation.x = Math.sin(t * 0.5) * 0.1;
       meshRef.current.rotation.z = Math.cos(t * 0.7) * 0.05;
     }
@@ -90,8 +99,11 @@ function PhoneModel({ imageSrc }: { imageSrc: string }) {
 }
 
 export function Phone3D({ imageSrc, className = '' }: Phone3DProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.3 });
+
   return (
-    <div className={`relative w-full aspect-[9/16] max-w-[320px] mx-auto ${className}`}>
+    <div ref={containerRef} className={`relative w-full aspect-[9/16] max-w-[320px] mx-auto ${className}`}>
       {/* We don't render canvas if window is not defined (SSR safety) */}
       {typeof window !== 'undefined' && (
         <Canvas shadows dpr={[1, 2]}>
@@ -104,7 +116,7 @@ export function Phone3D({ imageSrc, className = '' }: Phone3DProps) {
           
           <Environment preset="city" />
           
-          <PhoneModel imageSrc={imageSrc} />
+          <PhoneModel imageSrc={imageSrc} isVisible={isInView} />
         </Canvas>
       )}
     </div>

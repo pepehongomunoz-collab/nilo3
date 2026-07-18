@@ -39,7 +39,7 @@ export function Hero() {
       const cy = canvas.height / 2;
 
       // Draw subtle geometric lines
-      ctx.strokeStyle = 'rgba(229, 255, 80, 0.04)';
+      ctx.strokeStyle = 'rgba(255, 210, 0, 0.04)';
       ctx.lineWidth = 1;
 
       // Rotating arcs
@@ -72,7 +72,7 @@ export function Hero() {
 
       // Corner accent marks
       const markSize = 20;
-      ctx.strokeStyle = 'rgba(229, 255, 80, 0.06)';
+      ctx.strokeStyle = 'rgba(255, 210, 0, 0.06)';
       ctx.lineWidth = 1;
 
       // Top-left
@@ -92,7 +92,7 @@ export function Hero() {
 
       // Pulsing dot at center
       const dotSize = 2 + Math.sin(time * 2) * 1;
-      ctx.fillStyle = 'rgba(229, 255, 80, 0.15)';
+      ctx.fillStyle = 'rgba(255, 210, 0, 0.15)';
       ctx.beginPath();
       ctx.arc(cx, cy, dotSize, 0, Math.PI * 2);
       ctx.fill();

@@ -19,9 +19,9 @@ export default {
           elevated: '#1C1C24',
         },
         signal: {
-          DEFAULT: '#E5FF50',
-          dim: '#C8E036',
-          soft: 'rgba(229,255,80,0.08)',
+          DEFAULT: '#FFD200',
+          dim: '#E6BD00',
+          soft: 'rgba(255,210,0,0.08)',
         },
         warm: '#FF6B35',
       },
@@ -51,8 +51,8 @@ export default {
         '2xl': '16px',
       },
       boxShadow: {
-        'signal': '0 0 40px rgba(229, 255, 80, 0.12)',
-        'signal-lg': '0 0 80px rgba(229, 255, 80, 0.15)',
+        'signal': '0 0 40px rgba(255, 210, 0, 0.12)',
+        'signal-lg': '0 0 80px rgba(255, 210, 0, 0.15)',
         'soft': '0 4px 24px -4px rgba(0, 0, 0, 0.3)',
       },
       animation: {

@@ -55,7 +55,7 @@ export function CallToAction() {
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(229, 255, 80, 0.03) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255, 210, 0, 0.03) 0%, transparent 70%)',
         }}
       />
 
