@@ -5,7 +5,7 @@ const phrases = [
   'No somos una agencia de diseño.',
   'No somos una software factory.',
   'Somos ingenieros de producto.',
-  'Resolvemos problemas de negocio complejos mediante código limpio y arquitecturas escalables.',
+  'Transformamos desafíos en software escalable.',
 ];
 
 export function Manifesto() {

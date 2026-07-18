@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture, Environment, RoundedBox, PerspectiveCamera, Decal } from '@react-three/drei';
+import { useTexture, Environment, RoundedBox, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface Phone3DProps {
