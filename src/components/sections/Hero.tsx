@@ -210,19 +210,28 @@ export function Hero() {
 
         <h1
           ref={headlineRef}
-          className="hero-text font-display text-hero font-bold leading-[0.95] tracking-tight text-white mb-6"
+          className="hero-text font-display text-hero font-bold leading-[1.1] md:leading-[0.95] tracking-tight text-white mb-6 flex flex-wrap justify-center gap-x-[0.2em] gap-y-[0.1em]"
         >
-          <div className="overflow-hidden inline-block mr-[0.2em]">
-            <span className="hero-word block">Ingeniería de</span>
+          <div className="overflow-hidden inline-block">
+            <span className="hero-word block">Ingeniería</span>
           </div>
-          <br className="hidden md:block"/>
-          <div className="overflow-hidden inline-block mr-[0.2em]">
-            <span className="hero-word block">software para</span>
+          <div className="overflow-hidden inline-block">
+            <span className="hero-word block">de</span>
           </div>
-          <br className="hidden md:block"/>
-          <div className="overflow-hidden inline-flex items-center justify-center gap-[0.2em]">
-            <span className="hero-word block">líderes del</span>
-            <span className="hero-word text-signal inline-block translate-y-[0.05em] scale-90">mercado</span>
+          <div className="overflow-hidden inline-block">
+            <span className="hero-word block">software</span>
+          </div>
+          <div className="overflow-hidden inline-block">
+            <span className="hero-word block">para</span>
+          </div>
+          <div className="overflow-hidden inline-block">
+            <span className="hero-word block">líderes</span>
+          </div>
+          <div className="overflow-hidden inline-block">
+            <span className="hero-word block">del</span>
+          </div>
+          <div className="overflow-hidden inline-block">
+            <span className="hero-word text-signal block translate-y-[0.05em] scale-90">mercado</span>
           </div>
         </h1>
 

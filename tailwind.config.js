@@ -31,8 +31,8 @@ export default {
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       fontSize: {
-        'hero': ['clamp(3.5rem, 8vw, 7rem)', { lineHeight: '1.05', letterSpacing: '-0.04em', fontWeight: '800' }],
-        'section': ['clamp(2.5rem, 5vw, 4.5rem)', { lineHeight: '1.1', letterSpacing: '-0.03em', fontWeight: '700' }],
+        'hero': ['clamp(2.5rem, 8vw, 7rem)', { lineHeight: '1.05', letterSpacing: '-0.04em', fontWeight: '800' }],
+        'section': ['clamp(2rem, 5vw, 4.5rem)', { lineHeight: '1.1', letterSpacing: '-0.03em', fontWeight: '700' }],
         'subsection': ['clamp(1.5rem, 3vw, 2rem)', { lineHeight: '1.2', letterSpacing: '-0.02em', fontWeight: '600' }],
       },
       spacing: {

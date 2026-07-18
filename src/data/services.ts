@@ -56,4 +56,12 @@ export const services: Service[] = [
     capabilities: ['Sitios corporativos', 'E-commerce', 'Landing pages', 'SEO técnico', 'Analytics'],
     technologies: ['React', 'Next.js', 'Tailwind', 'Shopify', 'Vite'],
   },
+  {
+    id: 'performance-marketing',
+    index: '07',
+    title: 'Campaña y Publicidad',
+    description: 'Campañas de performance en Meta y Google Ads impulsadas por datos. Optimizamos cada centavo para maximizar el ROAS y escalar tu crecimiento.',
+    capabilities: ['Meta Ads', 'Google Ads', 'Performance Marketing', 'A/B Testing', 'Growth Hacking'],
+    technologies: ['Meta Business', 'Google Analytics', 'Tag Manager', 'Looker Studio', 'Pixels'],
+  },
 ];

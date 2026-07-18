@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { gsap } from '../../lib/gsap';
 import { useLenis } from '../../hooks/useLenis';
+import { SplitText } from '../ui/SplitText';
 
 export function CallToAction() {
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -59,17 +60,14 @@ export function CallToAction() {
       />
 
       <div className="site-container relative z-10 text-center">
+
         <h2
           ref={headlineRef}
-          className="font-display text-hero text-white mb-12"
+          className="font-display text-4xl md:text-6xl lg:text-hero font-bold text-white mb-12 max-w-5xl mx-auto leading-tight"
         >
-          {text.split('').map((char, i) => (
-            <span key={i} className="inline-block overflow-hidden">
-              <span className="cta-char inline-block">
-                {char === ' ' ? '\u00A0' : char}
-              </span>
-            </span>
-          ))}
+          <SplitText type="chars" charClassName="cta-char">
+            {text}
+          </SplitText>
         </h2>
 
         <motion.div
