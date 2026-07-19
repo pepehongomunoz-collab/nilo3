@@ -13,6 +13,7 @@ export const footerLinks = {
     { name: 'Automatización', href: '#services' },
     { name: 'Integraciones', href: '#services' },
     { name: 'IA Aplicada', href: '#services' },
+    { name: 'Publicidad Digital', href: '#services' },
   ],
   company: [
     { name: 'Nosotros', href: '#manifesto' },
