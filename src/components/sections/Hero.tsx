@@ -236,9 +236,9 @@ export function Hero() {
         </h1>
 
         <p className="hero-subtitle text-zinc-400 text-lg md:text-xl max-w-lg mx-auto font-medium mb-12">
-          Arquitectura digital de alto rendimiento.
+          Software a medida, automatización y publicidad digital de alto rendimiento.
           <br />
-          Construimos soluciones robustas para problemas complejos.
+          Construimos las herramientas y estrategias para escalar tu negocio.
         </p>
 
         <motion.div

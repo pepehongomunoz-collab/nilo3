@@ -92,11 +92,14 @@ export function Cases() {
                     className="case-image relative aspect-[16/10] rounded-xl overflow-hidden bg-surface"
                     style={{ willChange: 'clip-path' }}
                   >
-                    {/* Real Image */}
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105"
+                      className={`absolute inset-0 w-full h-full opacity-90 transition-transform duration-1000 group-hover:scale-105 ${
+                        project.category === 'Aplicación Android'
+                          ? 'object-contain p-6 md:p-12 drop-shadow-2xl scale-110'
+                          : 'object-cover object-top'
+                      }`}
                     />
                     {/* Subtle overlay for text contrast if needed */}
                     <div className="absolute inset-0 bg-gradient-to-t from-void-950/80 via-void-950/20 to-transparent pointer-events-none" />

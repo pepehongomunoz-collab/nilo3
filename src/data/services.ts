@@ -59,9 +59,9 @@ export const services: Service[] = [
   {
     id: 'performance-marketing',
     index: '07',
-    title: 'Campaña y Publicidad',
-    description: 'Campañas de performance en Meta y Google Ads impulsadas por datos. Optimizamos cada centavo para maximizar el ROAS y escalar tu crecimiento.',
-    capabilities: ['Meta Ads', 'Google Ads', 'Performance Marketing', 'A/B Testing', 'Growth Hacking'],
-    technologies: ['Meta Business', 'Google Analytics', 'Tag Manager', 'Looker Studio', 'Pixels'],
+    title: 'Publicidad Digital',
+    description: 'Campañas de performance en Meta Ads orientadas a resultados. Estrategias de pauta digital que maximizan tu retorno de inversión y escalan tus ventas.',
+    capabilities: ['Meta Ads', 'Performance Marketing', 'A/B Testing', 'Embudos de conversión'],
+    technologies: ['Meta Business', 'Pixels', 'Looker Studio'],
   },
 ];
