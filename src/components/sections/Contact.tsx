@@ -22,7 +22,7 @@ export function Contact() {
       'service_bnvn7b9',
       'template_wif78ek',
       formRef.current,
-      'zN5poxSAc6404Q5HP'
+      { publicKey: 'zN5poxSAc6404Q5HP' }
     )
       .then(() => {
         setSubmitStatus('success');
