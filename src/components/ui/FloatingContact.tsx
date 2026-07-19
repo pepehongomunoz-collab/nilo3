@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X } from 'lucide-react';
 import { useState } from 'react';
+import { company } from '../../data/company';
 
 export function FloatingContact() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +26,7 @@ export function FloatingContact() {
             </p>
             
             <a
-              href="https://wa.me/5491100000000" // Replace with actual number
+              href={company.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full bg-signal text-void font-medium py-3 px-4 rounded-xl hover:bg-signal/90 transition-colors"
