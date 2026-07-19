@@ -4,6 +4,7 @@ import { Mail, Phone, MapPin, Loader2, CheckCircle, AlertCircle } from 'lucide-r
 import { Button } from '../ui/Button';
 import { SectionLabel } from '../ui/SectionLabel';
 import { company } from '../../data/company';
+import emailjs from '@emailjs/browser';
 
 export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -16,14 +17,6 @@ export function Contact() {
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
-
-    const emailjs = (window as Window & { emailjs?: { sendForm: (...args: unknown[]) => Promise<{ text: string }> } }).emailjs;
-
-    if (!emailjs) {
-      setSubmitStatus('error');
-      setIsSubmitting(false);
-      return;
-    }
 
     emailjs.sendForm(
       'service_bnvn7b9',
