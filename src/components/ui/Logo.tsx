@@ -19,14 +19,14 @@ export function Logo({ size = 'md', className }: LogoProps) {
   };
 
   return (
-    <div className={clsx('flex items-center gap-3', className)}>
+    <div className={clsx('flex items-center gap-1', className)}>
       <img 
         src="/images/Logo.png" 
         alt="Nilotech Logo" 
         className={imageSizes[size]}
       />
       <div className={clsx('font-display font-bold tracking-tight', sizes[size])}>
-        <span className="text-white">nilo</span>
+        <span className="text-white">Nilo</span>
         <span className="text-signal">tech</span>
       </div>
     </div>
