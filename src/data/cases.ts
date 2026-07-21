@@ -41,7 +41,7 @@ export const cases: CaseStudy[] = [
   {
     id: 'psicologa',
     title: 'Landing Page Clínica',
-    category: 'Web Institucional',
+    category: 'Landing Page',
     description: 'Landing page de alto rendimiento orientada a conversión. Arquitectura de información diseñada para destacar metodologías clínicas y servicios terapéuticos. Incluye integración fluida con canales de contacto y agenda.',
     challenge: 'Falta de presencia digital profesional que refleje la calidad de la metodología de trabajo.',
     result: 'Canal de adquisición digital optimizado, con tiempos de carga casi instantáneos y alta retención de usuarios.',
