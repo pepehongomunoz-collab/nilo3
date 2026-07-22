@@ -30,7 +30,7 @@ export async function handler(event: { httpMethod: string; body?: string }) {
     }
 
     const resend = new Resend(apiKey);
-    const toEmail = process.env.RESEND_TO_EMAIL || 'contacto@nilotech.cl';
+    const toEmail = process.env.RESEND_TO_EMAIL || 'munozalbelonicolas@gmail.com';
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'NiloTech Web <onboarding@resend.dev>';
 
     const response = await resend.emails.send({
