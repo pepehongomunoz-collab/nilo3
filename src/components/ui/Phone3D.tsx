@@ -1,5 +1,7 @@
-import { useRef, Suspense, Component, ReactNode } from 'react';
+import { useRef, Suspense, Component } from 'react';
+import type { ReactNode } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
+
 import { useTexture, Environment, RoundedBox, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import { useInView } from 'framer-motion';

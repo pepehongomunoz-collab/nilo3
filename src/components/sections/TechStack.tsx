@@ -2,12 +2,24 @@ import { motion } from 'framer-motion';
 import { Marquee } from '../ui/Marquee';
 import { SectionLabel } from '../ui/SectionLabel';
 import { techCategories, techMarquee } from '../../data/technologies';
-
 import { Phone3D } from '../ui/Phone3D';
-
 import uiPhoneImg from '../../assets/images/3d/ui_phone_app.png';
+import { useLanguage } from '../../context/LanguageContext';
+import { getTranslation } from '../../i18n/translations';
 
 export function TechStack() {
+  const { language } = useLanguage();
+  const t = getTranslation(language).tech;
+
+  const categoryMap: Record<string, string> = {
+    'Frontend': t.categories.frontend,
+    'Backend': t.categories.backend,
+    'Datos': t.categories.data,
+    'Cloud & DevOps': t.categories.cloud,
+    'IA & ML': t.categories.ai,
+    'Mobile': t.categories.mobile,
+  };
+
   return (
     <section id="technologies" className="py-section relative overflow-hidden">
       {/* Marquee rows */}
@@ -43,14 +55,12 @@ export function TechStack() {
       <div className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mb-24 items-center">
           <div className="lg:col-span-5 relative z-10">
-            <SectionLabel>Stack</SectionLabel>
+            <SectionLabel>{t.label}</SectionLabel>
             <h2 className="font-display text-section text-white mt-4 mb-6">
-              Ingeniería de software.
-              <br />
-              <span className="text-zinc-600">Rendimiento puro.</span>
+              {t.title}
             </h2>
             <p className="text-zinc-500 text-lg leading-relaxed max-w-lg">
-              Construimos ecosistemas digitales escalables. Cada tecnología en nuestro stack es elegida por su capacidad para resolver problemas complejos de ingeniería, no por tendencias del mercado.
+              {t.subtitle}
             </p>
           </div>
           <div className="lg:col-span-7 flex justify-center lg:justify-end relative">
@@ -71,7 +81,7 @@ export function TechStack() {
               className="rounded-xl border border-white/[0.04] bg-void-900/50 p-6 hover:border-white/[0.08] transition-all duration-500 group"
             >
               <h3 className="font-display text-lg font-bold text-white mb-5 group-hover:text-signal transition-colors duration-300">
-                {category.name}
+                {categoryMap[category.name] || category.name}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {category.items.map((item) => (
@@ -90,3 +100,4 @@ export function TechStack() {
     </section>
   );
 }
+

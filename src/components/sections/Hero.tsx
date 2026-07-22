@@ -5,6 +5,8 @@ import { SectionLabel } from '../ui/SectionLabel';
 import { useMouseParallax } from '../../hooks/useMouseParallax';
 import { gsap } from '../../lib/gsap';
 import { useLenis } from '../../hooks/useLenis';
+import { useLanguage } from '../../context/LanguageContext';
+import { getTranslation } from '../../i18n/translations';
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -12,6 +14,8 @@ export function Hero() {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const mouse = useMouseParallax(0.015);
   const lenis = useLenis();
+  const { language } = useLanguage();
+  const t = getTranslation(language).hero;
 
   // Canvas geometric animation
   useEffect(() => {
@@ -166,7 +170,7 @@ export function Hero() {
     });
 
     return () => { tl.kill(); };
-  }, []);
+  }, [language]);
 
   const scrollTo = useCallback((id: string) => {
     const target = document.getElementById(id);
@@ -238,7 +242,7 @@ export function Hero() {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <SectionLabel className="mb-8 block">
-            Product & Engineering Studio
+            {t.label}
           </SectionLabel>
         </motion.div>
 
@@ -247,32 +251,18 @@ export function Hero() {
           className="hero-text font-display text-hero font-bold leading-[1.1] md:leading-[0.95] tracking-tight text-white mb-6 flex flex-wrap justify-center gap-x-[0.2em] gap-y-[0.1em]"
         >
           <div className="overflow-hidden inline-block">
-            <span className="hero-word block">Ingeniería</span>
+            <span className="hero-word block">{t.titlePart1}</span>
           </div>
           <div className="overflow-hidden inline-block">
-            <span className="hero-word block">de</span>
+            <span className="hero-word block">{t.titlePart2}</span>
           </div>
           <div className="overflow-hidden inline-block">
-            <span className="hero-word block">software</span>
-          </div>
-          <div className="overflow-hidden inline-block">
-            <span className="hero-word block">para</span>
-          </div>
-          <div className="overflow-hidden inline-block">
-            <span className="hero-word block">líderes</span>
-          </div>
-          <div className="overflow-hidden inline-block">
-            <span className="hero-word block">del</span>
-          </div>
-          <div className="overflow-hidden inline-block">
-            <span className="hero-word text-signal block translate-y-[0.05em] scale-90">mercado</span>
+            <span className="hero-word text-signal block translate-y-[0.05em] scale-90">{t.titlePart3}</span>
           </div>
         </h1>
 
         <p className="hero-subtitle text-zinc-400 text-lg md:text-xl max-w-lg mx-auto font-medium mb-12">
-          Software a medida, automatización y publicidad digital de alto rendimiento.
-          <br />
-          Construimos las herramientas y estrategias para escalar tu negocio.
+          {t.subtitle}
         </p>
 
         <motion.div
@@ -282,10 +272,10 @@ export function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Button size="lg" onClick={() => scrollTo('contact')}>
-            Iniciar proyecto
+            {t.ctaPrimary}
           </Button>
           <Button variant="outline" size="lg" onClick={() => scrollTo('cases')}>
-            Ver proyectos
+            {t.ctaSecondary}
           </Button>
         </motion.div>
 

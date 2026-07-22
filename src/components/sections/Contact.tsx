@@ -5,6 +5,8 @@ import { Button } from '../ui/Button';
 import { SectionLabel } from '../ui/SectionLabel';
 import { company } from '../../data/company';
 import emailjs from '@emailjs/browser';
+import { useLanguage } from '../../context/LanguageContext';
+import { getTranslation } from '../../i18n/translations';
 
 const COOLDOWN_SECONDS = 30;
 
@@ -14,6 +16,9 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'rate-limited'>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const { language } = useLanguage();
+  const t = getTranslation(language).contact;
+  const servicesList = getTranslation(language).services.items;
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +28,6 @@ export function Contact() {
     const formData = new FormData(formRef.current);
     const honeypot = formData.get('_gotcha');
     if (honeypot) {
-      // Quietly drop bot submissions
       setSubmitStatus('success');
       formRef.current.reset();
       return;
@@ -35,7 +39,7 @@ export function Contact() {
     if (lastSubmitTimeRef.current > 0 && elapsedSeconds < COOLDOWN_SECONDS) {
       const waitTime = Math.ceil(COOLDOWN_SECONDS - elapsedSeconds);
       setSubmitStatus('rate-limited');
-      setErrorMessage(`Por favor esperá ${waitTime} segundos antes de enviar otro mensaje.`);
+      setErrorMessage(t.rateLimitMessage(waitTime));
       return;
     }
 
@@ -46,7 +50,7 @@ export function Contact() {
 
     if (!serviceId || !templateId || !publicKey) {
       setSubmitStatus('error');
-      setErrorMessage('Error de configuración del servicio de email.');
+      setErrorMessage(t.errorMessage);
       return;
     }
 
@@ -64,7 +68,7 @@ export function Contact() {
       .catch((err) => {
         console.error('EmailJS error:', err);
         setSubmitStatus('error');
-        setErrorMessage('Error al enviar. Intentá de nuevo o escribinos por WhatsApp.');
+        setErrorMessage(t.errorMessage);
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -77,14 +81,14 @@ export function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Left — Info */}
           <div>
-            <SectionLabel>Contacto</SectionLabel>
+            <SectionLabel>{t.label}</SectionLabel>
             <h2 className="font-display text-section text-white mt-4 mb-6">
-              Tu próximo producto
+              {t.titlePart1}
               <br />
-              <span className="text-zinc-600">empieza acá.</span>
+              <span className="text-zinc-600">{t.titlePart2}</span>
             </h2>
             <p className="text-zinc-500 leading-relaxed mb-12 max-w-md">
-              Contanos sobre tu proyecto. Analizamos tus necesidades y te respondemos en menos de 24 horas.
+              {t.subtitle}
             </p>
 
             {/* Contact info */}
@@ -94,7 +98,7 @@ export function Contact() {
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="section-label mb-0.5">Email</div>
+                  <div className="section-label mb-0.5">{t.emailLabel}</div>
                   <div className="text-sm text-zinc-400 group-hover:text-white transition-colors">{company.email}</div>
                 </div>
               </a>
@@ -104,7 +108,7 @@ export function Contact() {
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="section-label mb-0.5">WhatsApp</div>
+                  <div className="section-label mb-0.5">{t.phoneLabel}</div>
                   <div className="text-sm text-zinc-400 group-hover:text-white transition-colors">{company.phone}</div>
                 </div>
               </a>
@@ -114,7 +118,7 @@ export function Contact() {
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="section-label mb-0.5">Ubicación</div>
+                  <div className="section-label mb-0.5">{t.locationLabel}</div>
                   <div className="text-sm text-zinc-400">{company.location}</div>
                 </div>
               </div>
@@ -129,7 +133,6 @@ export function Contact() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
-              {/* Anti-spam honeypot input (hidden from real users) */}
               <input
                 type="text"
                 name="_gotcha"
@@ -141,7 +144,7 @@ export function Contact() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="section-label mb-2 block">Nombre</label>
+                  <label htmlFor="name" className="section-label mb-2 block">{t.nameLabel}</label>
                   <input
                     type="text"
                     id="name"
@@ -149,11 +152,11 @@ export function Contact() {
                     required
                     maxLength={100}
                     className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white placeholder:text-zinc-700 focus:outline-none focus:border-signal/50 transition-colors text-sm"
-                    placeholder="Tu nombre"
+                    placeholder={t.namePlaceholder}
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="section-label mb-2 block">Email</label>
+                  <label htmlFor="email" className="section-label mb-2 block">{t.emailFieldLabel}</label>
                   <input
                     type="email"
                     id="email"
@@ -161,30 +164,28 @@ export function Contact() {
                     required
                     maxLength={100}
                     className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white placeholder:text-zinc-700 focus:outline-none focus:border-signal/50 transition-colors text-sm"
-                    placeholder="tu@email.com"
+                    placeholder={t.emailPlaceholder}
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="service" className="section-label mb-2 block">Servicio de interés</label>
+                <label htmlFor="service" className="section-label mb-2 block">Servicio</label>
                 <select
                   id="service"
                   name="service"
                   className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white focus:outline-none focus:border-signal/50 transition-colors text-sm appearance-none"
                 >
-                  <option className="bg-void">Productos Digitales</option>
-                  <option className="bg-void">Software a Medida</option>
-                  <option className="bg-void">Automatización</option>
-                  <option className="bg-void">Integraciones</option>
-                  <option className="bg-void">IA Aplicada</option>
-                  <option className="bg-void">Desarrollo Web</option>
-                  <option className="bg-void">Otro</option>
+                  {servicesList.map((svc) => (
+                    <option key={svc.id} className="bg-void" value={svc.title}>
+                      {svc.title}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               <div>
-                <label htmlFor="message" className="section-label mb-2 block">Mensaje</label>
+                <label htmlFor="message" className="section-label mb-2 block">{t.messageLabel}</label>
                 <textarea
                   id="message"
                   name="message"
@@ -192,7 +193,7 @@ export function Contact() {
                   rows={4}
                   maxLength={2000}
                   className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white placeholder:text-zinc-700 focus:outline-none focus:border-signal/50 transition-colors resize-none text-sm"
-                  placeholder="Contanos sobre tu proyecto..."
+                  placeholder={t.messagePlaceholder}
                 />
               </div>
 
@@ -201,10 +202,10 @@ export function Contact() {
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      Enviando...
+                      {t.submitting}
                     </span>
                   ) : (
-                    'Enviar mensaje'
+                    t.submitButton
                   )}
                 </Button>
               </div>
@@ -212,14 +213,14 @@ export function Contact() {
               {submitStatus === 'success' && (
                 <div className="flex items-center gap-3 text-signal bg-signal/5 p-4 rounded-xl border border-signal/10">
                   <CheckCircle className="w-5 h-5 shrink-0" />
-                  <span className="text-sm">Mensaje enviado. Te contactamos en menos de 24 horas.</span>
+                  <span className="text-sm">{t.successMessage}</span>
                 </div>
               )}
 
               {(submitStatus === 'error' || submitStatus === 'rate-limited') && (
                 <div className="flex items-center gap-3 text-warm bg-warm/5 p-4 rounded-xl border border-warm/10">
                   <AlertCircle className="w-5 h-5 shrink-0" />
-                  <span className="text-sm">{errorMessage || 'Error al enviar. Intentá de nuevo o escribinos por WhatsApp.'}</span>
+                  <span className="text-sm">{errorMessage || t.errorMessage}</span>
                 </div>
               )}
             </form>
@@ -229,3 +230,4 @@ export function Contact() {
     </section>
   );
 }
+

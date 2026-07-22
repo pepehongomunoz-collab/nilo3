@@ -1,22 +1,24 @@
 import { motion } from 'framer-motion';
 import { SectionLabel } from '../ui/SectionLabel';
-import { testimonials } from '../../data/testimonials';
+import { useLanguage } from '../../context/LanguageContext';
+import { getTranslation } from '../../i18n/translations';
 
 export function Testimonials() {
+  const { language } = useLanguage();
+  const t = getTranslation(language).testimonials;
+
   return (
     <section id="testimonials" className="py-section relative">
       <div className="site-container">
         <div className="mb-20 md:mb-28">
-          <SectionLabel>Testimonios</SectionLabel>
+          <SectionLabel>{t.label}</SectionLabel>
           <h2 className="font-display text-section text-white mt-4 max-w-2xl">
-            Lo que dicen
-            <br />
-            <span className="text-zinc-600">quienes trabajaron con nosotros.</span>
+            {t.title}
           </h2>
         </div>
 
         <div className="space-y-24 md:space-y-32">
-          {testimonials.map((testimonial, i) => (
+          {t.items.map((testimonial, i) => (
             <motion.blockquote
               key={testimonial.id}
               initial={{ opacity: 0, y: 30 }}
@@ -55,3 +57,4 @@ export function Testimonials() {
     </section>
   );
 }
+

@@ -1,10 +1,14 @@
 // Process section with horizontal scroll
-import { processSteps } from '../../data/process';
 import { SectionLabel } from '../ui/SectionLabel';
 import { useGSAP } from '../../hooks/useGSAP';
 import { gsap } from '../../lib/gsap';
+import { useLanguage } from '../../context/LanguageContext';
+import { getTranslation } from '../../i18n/translations';
 
 export function Process() {
+  const { language } = useLanguage();
+  const t = getTranslation(language).process;
+
   const containerRef = useGSAP(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -21,7 +25,7 @@ export function Process() {
     // Calculate total scroll distance
     const totalWidth = track.scrollWidth - window.innerWidth + 200;
 
-    // Pre-create quickSetters for cheaper per-frame updates (avoids gsap.set overhead)
+    // Pre-create quickSetters for cheaper per-frame updates
     const opacitySetters = Array.from(cards).map(card => gsap.quickSetter(card, 'opacity'));
     const scaleSetters = Array.from(cards).map(card => gsap.quickSetter(card, 'scale'));
 
@@ -37,7 +41,7 @@ export function Process() {
         onUpdate: (self) => {
           const progress = self.progress;
           const maxIndex = Math.max(1, cards.length - 1);
-          const invMaxIndex = 1.2 / maxIndex; // Pre-compute threshold
+          const invMaxIndex = 1.2 / maxIndex;
           
           for (let i = 0; i < cards.length; i++) {
             const target = i / maxIndex;
@@ -72,7 +76,7 @@ export function Process() {
         },
       });
     }
-  });
+  }, [language]);
 
   return (
     <section id="process" ref={containerRef} className="relative bg-surface/30">
@@ -89,17 +93,17 @@ export function Process() {
       {/* Desktop: horizontal scroll */}
       <div className="hidden lg:block overflow-hidden">
         <div className="site-container pt-24 pb-8">
-          <SectionLabel>Proceso</SectionLabel>
+          <SectionLabel>{t.label}</SectionLabel>
           <h2 className="font-display text-section text-white mt-4 mb-4">
-            Cómo trabajamos.
+            {t.title}
           </h2>
           <p className="text-zinc-500 max-w-md mb-8">
-            Un framework probado que garantiza calidad y transparencia en cada etapa.
+            {t.subtitle}
           </p>
         </div>
 
         <div className="process-track flex gap-8 pl-20 pr-[40vw] pb-24 pt-8">
-          {processSteps.map((step) => (
+          {t.steps.map((step) => (
             <div
               key={step.id}
               className="process-card shrink-0 w-[380px] rounded-xl border border-white/[0.04] bg-void-900/80 p-8 flex flex-col"
@@ -128,19 +132,19 @@ export function Process() {
       {/* Mobile: vertical timeline */}
       <div className="lg:hidden py-section">
         <div className="site-container">
-          <SectionLabel>Proceso</SectionLabel>
+          <SectionLabel>{t.label}</SectionLabel>
           <h2 className="font-display text-section text-white mt-4 mb-12">
-            Cómo trabajamos.
+            {t.title}
           </h2>
 
           <div className="space-y-8">
-            {processSteps.map((step, i) => (
+            {t.steps.map((step, i) => (
               <div key={step.id} className="flex gap-6">
                 <div className="flex flex-col items-center">
                   <div className="w-10 h-10 rounded-lg border border-white/[0.06] bg-void-800 flex items-center justify-center shrink-0">
                     <span className="font-mono text-xs font-medium text-signal">{step.number}</span>
                   </div>
-                  {i < processSteps.length - 1 && (
+                  {i < t.steps.length - 1 && (
                     <div className="w-px flex-1 bg-white/[0.04] mt-2" />
                   )}
                 </div>
@@ -163,3 +167,4 @@ export function Process() {
     </section>
   );
 }
+

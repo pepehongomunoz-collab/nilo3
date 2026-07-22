@@ -2,9 +2,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X } from 'lucide-react';
 import { useState } from 'react';
 import { company } from '../../data/company';
+import { useLanguage } from '../../context/LanguageContext';
+import { getTranslation } from '../../i18n/translations';
 
 export function FloatingContact() {
   const [isOpen, setIsOpen] = useState(false);
+  const { language } = useLanguage();
+  const t = getTranslation(language).floatingContact;
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -20,9 +24,9 @@ export function FloatingContact() {
             {/* Subtle top glow */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-signal to-transparent opacity-50" />
             
-            <h3 className="font-display font-bold text-white text-lg mb-2">Hablemos de tu proyecto</h3>
+            <h3 className="font-display font-bold text-white text-lg mb-2">{t.title}</h3>
             <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
-              Respuesta en menos de 2 horas laborables. Nivel ejecutivo garantizado.
+              {t.subtitle}
             </p>
             
             <a
@@ -32,7 +36,7 @@ export function FloatingContact() {
               className="flex items-center justify-center gap-3 w-full bg-signal text-void font-medium py-3 px-4 rounded-xl hover:bg-signal/90 transition-colors"
             >
               <MessageCircle size={18} className="fill-void" />
-              <span>Contactar por WhatsApp</span>
+              <span>{t.whatsappButton}</span>
             </a>
           </motion.div>
         )}
@@ -59,3 +63,4 @@ export function FloatingContact() {
     </div>
   );
 }
+

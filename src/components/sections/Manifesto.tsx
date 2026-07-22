@@ -1,14 +1,19 @@
 import { useGSAP } from '../../hooks/useGSAP';
 import { gsap } from '../../lib/gsap';
-
-const phrases = [
-  'No somos una agencia de diseño.',
-  'No somos una software factory.',
-  'Somos ingenieros de producto.',
-  'Transformamos desafíos en software escalable.',
-];
+import { useLanguage } from '../../context/LanguageContext';
+import { getTranslation } from '../../i18n/translations';
 
 export function Manifesto() {
+  const { language } = useLanguage();
+  const t = getTranslation(language).manifesto;
+
+  const phrases = [
+    t.phrase1,
+    t.phrase2,
+    t.phrase3,
+    t.phrase4Part1,
+  ];
+
   const containerRef = useGSAP(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -32,7 +37,7 @@ export function Manifesto() {
         .to(item, { opacity: 1, duration: 0.2 }) // hold
         .to(item, { opacity: 0.1, filter: 'blur(10px)', y: -20, duration: 0.4, ease: 'none' });
     });
-  });
+  }, [language]);
 
   return (
     <section
@@ -50,8 +55,8 @@ export function Manifesto() {
             >
               {i === phrases.length - 1 ? (
                 <>
-                  Transformamos ideas en{' '}
-                  <span className="text-signal">soluciones digitales.</span>
+                  {t.phrase4Part1}{' '}
+                  <span className="text-signal">{t.phrase4Part2}</span>
                 </>
               ) : (
                 phrase
@@ -63,3 +68,4 @@ export function Manifesto() {
     </section>
   );
 }
+

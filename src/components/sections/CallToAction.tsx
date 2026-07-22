@@ -4,10 +4,14 @@ import { Button } from '../ui/Button';
 import { gsap } from '../../lib/gsap';
 import { useLenis } from '../../hooks/useLenis';
 import { SplitText } from '../ui/SplitText';
+import { useLanguage } from '../../context/LanguageContext';
+import { getTranslation } from '../../i18n/translations';
 
 export function CallToAction() {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const lenis = useLenis();
+  const { language } = useLanguage();
+  const t = getTranslation(language).cta;
 
   useEffect(() => {
     const headline = headlineRef.current;
@@ -33,7 +37,7 @@ export function CallToAction() {
         },
       }
     );
-  }, []);
+  }, [language]);
 
   const scrollToContact = () => {
     const target = document.getElementById('contact');
@@ -45,8 +49,6 @@ export function CallToAction() {
       }
     }
   };
-
-  const text = 'Construyamos algo juntos.';
 
   return (
     <section className="py-section relative overflow-hidden">
@@ -65,8 +67,8 @@ export function CallToAction() {
           ref={headlineRef}
           className="font-display text-4xl md:text-6xl lg:text-hero font-bold text-white mb-12 max-w-5xl mx-auto leading-tight"
         >
-          <SplitText type="chars" charClassName="cta-char">
-            {text}
+          <SplitText key={language} type="chars" charClassName="cta-char">
+            {t.headline}
           </SplitText>
         </h2>
 
@@ -77,10 +79,11 @@ export function CallToAction() {
           transition={{ delay: 0.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <Button size="lg" onClick={scrollToContact}>
-            Iniciar proyecto
+            {t.button}
           </Button>
         </motion.div>
       </div>
     </section>
   );
 }
+
