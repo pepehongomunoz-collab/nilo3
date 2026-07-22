@@ -4,7 +4,6 @@ import { Mail, Phone, MapPin, Loader2, CheckCircle, AlertCircle } from 'lucide-r
 import { Button } from '../ui/Button';
 import { SectionLabel } from '../ui/SectionLabel';
 import { company } from '../../data/company';
-import emailjs from '@emailjs/browser';
 import { useLanguage } from '../../context/LanguageContext';
 import { getTranslation } from '../../i18n/translations';
 
@@ -43,32 +42,35 @@ export function Contact() {
       return;
     }
 
-    // 3. Env variables check
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      setSubmitStatus('error');
-      setErrorMessage(t.errorMessage);
-      return;
-    }
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const service = formData.get('service') as string;
+    const message = formData.get('message') as string;
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
 
-    emailjs
-      .sendForm(serviceId, templateId, formRef.current, { publicKey })
-      .then(() => {
+    fetch('/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, service, message }),
+    })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error(data.error || t.errorMessage);
+        }
         setSubmitStatus('success');
         lastSubmitTimeRef.current = Date.now();
         formRef.current?.reset();
       })
-      .catch((err) => {
-        console.error('EmailJS error:', err);
+      .catch((err: any) => {
+        console.error('Resend send error:', err);
         setSubmitStatus('error');
-        setErrorMessage(t.errorMessage);
+        setErrorMessage(err.message || t.errorMessage);
       })
       .finally(() => {
         setIsSubmitting(false);
