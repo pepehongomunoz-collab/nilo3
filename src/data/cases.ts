@@ -1,6 +1,6 @@
-import lubriImg from '../assets/images/cases/Lubri.png';
-import appClubImg from '../assets/images/cases/AppClub.png';
-import psicoImg from '../assets/images/cases/psico.png';
+import lubriImg from '../assets/images/cases/Lubri.webp';
+import appClubImg from '../assets/images/cases/AppClub.webp';
+import psicoImg from '../assets/images/cases/psico.webp';
 
 export interface CaseStudy {
   id: string;

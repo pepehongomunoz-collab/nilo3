@@ -21,6 +21,10 @@ export function Process() {
     // Calculate total scroll distance
     const totalWidth = track.scrollWidth - window.innerWidth + 200;
 
+    // Pre-create quickSetters for cheaper per-frame updates (avoids gsap.set overhead)
+    const opacitySetters = Array.from(cards).map(card => gsap.quickSetter(card, 'opacity'));
+    const scaleSetters = Array.from(cards).map(card => gsap.quickSetter(card, 'scale'));
+
     // Pin and horizontal scroll
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -33,21 +37,19 @@ export function Process() {
         onUpdate: (self) => {
           const progress = self.progress;
           const maxIndex = Math.max(1, cards.length - 1);
+          const invMaxIndex = 1.2 / maxIndex; // Pre-compute threshold
           
-          cards.forEach((card, i) => {
+          for (let i = 0; i < cards.length; i++) {
             const target = i / maxIndex;
             const distance = Math.abs(progress - target);
-            // Controls how quickly the card fades in/out (wider threshold = more overlap)
-            const threshold = 1.2 / maxIndex;
             
-            let intensity = 1 - (distance / threshold);
-            intensity = Math.max(0, Math.min(1, intensity)); // Clamp 0-1
+            let intensity = 1 - (distance / invMaxIndex);
+            if (intensity < 0) intensity = 0;
+            else if (intensity > 1) intensity = 1;
             
-            gsap.set(card, { 
-              opacity: 0.3 + (0.7 * intensity),
-              scale: 0.95 + (0.05 * intensity)
-            });
-          });
+            opacitySetters[i](0.3 + (0.7 * intensity));
+            scaleSetters[i](0.95 + (0.05 * intensity));
+          }
         }
       },
     });
@@ -101,7 +103,6 @@ export function Process() {
             <div
               key={step.id}
               className="process-card shrink-0 w-[380px] rounded-xl border border-white/[0.04] bg-void-900/80 p-8 flex flex-col"
-              style={{ willChange: 'transform, opacity' }}
             >
               <span className="font-mono text-signal text-sm font-medium mb-6">
                 {step.number}

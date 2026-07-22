@@ -16,13 +16,15 @@ export function Hero() {
   // Canvas geometric animation
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationId: number;
+    let animationId: number = 0;
     let time = 0;
+    let isRunning = false;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -31,7 +33,7 @@ export function Hero() {
     resize();
     window.addEventListener('resize', resize);
 
-    const draw = () => {
+    const renderFrame = () => {
       time += 0.003;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -96,17 +98,48 @@ export function Hero() {
       ctx.beginPath();
       ctx.arc(cx, cy, dotSize, 0, Math.PI * 2);
       ctx.fill();
-
-      animationId = requestAnimationFrame(draw);
     };
+
+    const loop = () => {
+      if (!isRunning) return;
+      renderFrame();
+      animationId = requestAnimationFrame(loop);
+    };
+
+    const startAnimation = () => {
+      if (isRunning) return;
+      isRunning = true;
+      animationId = requestAnimationFrame(loop);
+    };
+
+    const stopAnimation = () => {
+      isRunning = false;
+      if (animationId) cancelAnimationFrame(animationId);
+    };
+
+    // Use IntersectionObserver to pause/resume animation cleanly
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(container);
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!prefersReduced) {
-      draw();
+      startAnimation();
+    } else {
+      renderFrame();
     }
 
     return () => {
-      cancelAnimationFrame(animationId);
+      stopAnimation();
+      observer.disconnect();
       window.removeEventListener('resize', resize);
     };
   }, []);
@@ -157,7 +190,8 @@ export function Hero() {
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
-          transform: `translate(${mouse.x * 0.5}px, ${mouse.y * 0.5}px)`,
+          transform: `translate3d(${mouse.x * 0.5}px, ${mouse.y * 0.5}px, 0)`,
+          willChange: 'transform',
         }}
       />
 
@@ -165,26 +199,26 @@ export function Hero() {
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {/* Shape 1 — top right */}
         <div
-          className="absolute top-[15%] right-[10%] w-32 h-32 border border-white/[0.03] rounded-xl rotate-12"
+          className="absolute top-[15%] right-[10%] w-32 h-32 border border-white/[0.03] rounded-xl"
           style={{
-            transform: `translate(${mouse.x * -1.2}px, ${mouse.y * -1.2}px) rotate(12deg)`,
-            transition: 'transform 0.1s linear',
+            transform: `translate3d(${mouse.x * -1.2}px, ${mouse.y * -1.2}px, 0) rotate(12deg)`,
+            willChange: 'transform',
           }}
         />
         {/* Shape 2 — bottom left */}
         <div
           className="absolute bottom-[20%] left-[8%] w-24 h-24 border border-signal/[0.04] rounded-full"
           style={{
-            transform: `translate(${mouse.x * 0.8}px, ${mouse.y * 0.8}px)`,
-            transition: 'transform 0.1s linear',
+            transform: `translate3d(${mouse.x * 0.8}px, ${mouse.y * 0.8}px, 0)`,
+            willChange: 'transform',
           }}
         />
         {/* Shape 3 — center-left */}
         <div
           className="absolute top-[45%] left-[20%] w-2 h-2 bg-signal/20 rounded-full"
           style={{
-            transform: `translate(${mouse.x * 2}px, ${mouse.y * 2}px)`,
-            transition: 'transform 0.1s linear',
+            transform: `translate3d(${mouse.x * 2}px, ${mouse.y * 2}px, 0)`,
+            willChange: 'transform',
           }}
         />
       </div>

@@ -6,30 +6,65 @@ import { SectionLabel } from '../ui/SectionLabel';
 import { company } from '../../data/company';
 import emailjs from '@emailjs/browser';
 
+const COOLDOWN_SECONDS = 30;
+
 export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
+  const lastSubmitTimeRef = useRef<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'rate-limited'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formRef.current) return;
 
+    // 1. Anti-spam: Honeypot check
+    const formData = new FormData(formRef.current);
+    const honeypot = formData.get('_gotcha');
+    if (honeypot) {
+      // Quietly drop bot submissions
+      setSubmitStatus('success');
+      formRef.current.reset();
+      return;
+    }
+
+    // 2. Client-side Rate Limiting (Cooldown)
+    const now = Date.now();
+    const elapsedSeconds = (now - lastSubmitTimeRef.current) / 1000;
+    if (lastSubmitTimeRef.current > 0 && elapsedSeconds < COOLDOWN_SECONDS) {
+      const waitTime = Math.ceil(COOLDOWN_SECONDS - elapsedSeconds);
+      setSubmitStatus('rate-limited');
+      setErrorMessage(`Por favor esperá ${waitTime} segundos antes de enviar otro mensaje.`);
+      return;
+    }
+
+    // 3. Env variables check
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setSubmitStatus('error');
+      setErrorMessage('Error de configuración del servicio de email.');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    setErrorMessage('');
 
-    emailjs.sendForm(
-      'service_bnvn7b9',
-      'template_wif78ek',
-      formRef.current,
-      { publicKey: 'zN5poxSAc6404Q5HP' }
-    )
+    emailjs
+      .sendForm(serviceId, templateId, formRef.current, { publicKey })
       .then(() => {
         setSubmitStatus('success');
+        lastSubmitTimeRef.current = Date.now();
         formRef.current?.reset();
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('EmailJS error:', err);
         setSubmitStatus('error');
+        setErrorMessage('Error al enviar. Intentá de nuevo o escribinos por WhatsApp.');
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -94,6 +129,16 @@ export function Contact() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
+              {/* Anti-spam honeypot input (hidden from real users) */}
+              <input
+                type="text"
+                name="_gotcha"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="section-label mb-2 block">Nombre</label>
@@ -102,6 +147,7 @@ export function Contact() {
                     id="name"
                     name="name"
                     required
+                    maxLength={100}
                     className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white placeholder:text-zinc-700 focus:outline-none focus:border-signal/50 transition-colors text-sm"
                     placeholder="Tu nombre"
                   />
@@ -113,6 +159,7 @@ export function Contact() {
                     id="email"
                     name="email"
                     required
+                    maxLength={100}
                     className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white placeholder:text-zinc-700 focus:outline-none focus:border-signal/50 transition-colors text-sm"
                     placeholder="tu@email.com"
                   />
@@ -143,6 +190,7 @@ export function Contact() {
                   name="message"
                   required
                   rows={4}
+                  maxLength={2000}
                   className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white placeholder:text-zinc-700 focus:outline-none focus:border-signal/50 transition-colors resize-none text-sm"
                   placeholder="Contanos sobre tu proyecto..."
                 />
@@ -168,10 +216,10 @@ export function Contact() {
                 </div>
               )}
 
-              {submitStatus === 'error' && (
+              {(submitStatus === 'error' || submitStatus === 'rate-limited') && (
                 <div className="flex items-center gap-3 text-warm bg-warm/5 p-4 rounded-xl border border-warm/10">
                   <AlertCircle className="w-5 h-5 shrink-0" />
-                  <span className="text-sm">Error al enviar. Intentá de nuevo o escribinos por WhatsApp.</span>
+                  <span className="text-sm">{errorMessage || 'Error al enviar. Intentá de nuevo o escribinos por WhatsApp.'}</span>
                 </div>
               )}
             </form>

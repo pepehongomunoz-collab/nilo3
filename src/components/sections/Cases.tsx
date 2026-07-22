@@ -90,11 +90,12 @@ export function Cases() {
                 <div className={`${index % 2 === 0 ? 'lg:col-span-7' : 'lg:col-span-7 lg:col-start-6'}`}>
                   <div
                     className="case-image relative aspect-[16/10] rounded-xl overflow-hidden bg-surface"
-                    style={{ willChange: 'clip-path' }}
                   >
                     <img
                       src={project.image}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className={`absolute inset-0 w-full h-full opacity-90 transition-transform duration-1000 group-hover:scale-105 ${
                         project.category === 'Aplicación Android'
                           ? 'object-contain p-6 md:p-12 drop-shadow-2xl scale-110'
