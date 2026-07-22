@@ -45,8 +45,8 @@ export default defineConfig(({ mode }) => {
                 }
 
                 const resend = new Resend(apiKey);
-                const toEmail = env.RESEND_TO_EMAIL || process.env.RESEND_TO_EMAIL || 'munozalbelonicolas@gmail.com';
-                const fromEmail = env.RESEND_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || 'NiloTech Web <onboarding@resend.dev>';
+                const toEmail = env.RESEND_TO_EMAIL || process.env.RESEND_TO_EMAIL || 'desarrollos@nilotech.online';
+                const fromEmail = env.RESEND_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || 'NiloTech Web <notificaciones@nilotech.online>';
 
                 const response = await resend.emails.send({
                   from: fromEmail,
