@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { company } from '../../data/company';
 import { useLanguage } from '../../context/LanguageContext';
 import { getTranslation } from '../../i18n/translations';
+import { trackPixelEvent } from '../../lib/pixel';
 
 export function FloatingContact() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,6 +34,7 @@ export function FloatingContact() {
               href={company.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackPixelEvent('Contact', { method: 'whatsapp', location: 'floating_widget' })}
               className="flex items-center justify-center gap-3 w-full bg-signal text-void font-medium py-3 px-4 rounded-xl hover:bg-signal/90 transition-colors"
             >
               <MessageCircle size={18} className="fill-void" />

@@ -6,6 +6,7 @@ import { SectionLabel } from '../ui/SectionLabel';
 import { company } from '../../data/company';
 import { useLanguage } from '../../context/LanguageContext';
 import { getTranslation } from '../../i18n/translations';
+import { trackPixelEvent } from '../../lib/pixel';
 
 const COOLDOWN_SECONDS = 30;
 
@@ -65,6 +66,10 @@ export function Contact() {
         }
         setSubmitStatus('success');
         lastSubmitTimeRef.current = Date.now();
+        trackPixelEvent('Lead', {
+          content_name: service || 'General Inquiry',
+          service: service || 'general',
+        });
         formRef.current?.reset();
       })
       .catch((err: any) => {
@@ -95,7 +100,11 @@ export function Contact() {
 
             {/* Contact info */}
             <div className="space-y-6">
-              <a href={`mailto:${company.email}`} className="flex items-center gap-4 group">
+              <a
+                href={`mailto:${company.email}`}
+                onClick={() => trackPixelEvent('Contact', { method: 'email', location: 'contact_section' })}
+                className="flex items-center gap-4 group"
+              >
                 <div className="w-10 h-10 rounded-lg border border-white/[0.04] bg-surface flex items-center justify-center text-zinc-600 group-hover:text-signal group-hover:border-signal/20 transition-all">
                   <Mail className="w-4 h-4" />
                 </div>
@@ -105,7 +114,13 @@ export function Contact() {
                 </div>
               </a>
 
-              <a href={company.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+              <a
+                href={company.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackPixelEvent('Contact', { method: 'whatsapp', location: 'contact_section' })}
+                className="flex items-center gap-4 group"
+              >
                 <div className="w-10 h-10 rounded-lg border border-white/[0.04] bg-surface flex items-center justify-center text-zinc-600 group-hover:text-signal group-hover:border-signal/20 transition-all">
                   <Phone className="w-4 h-4" />
                 </div>

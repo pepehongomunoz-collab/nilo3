@@ -5,6 +5,7 @@ import { footerLinks } from '../../data/navigation';
 import { LegalModal } from '../ui/LegalModal';
 import { useLanguage } from '../../context/LanguageContext';
 import { getTranslation } from '../../i18n/translations';
+import { trackPixelEvent } from '../../lib/pixel';
 
 export function Footer() {
   const [legalModalType, setLegalModalType] = useState<'privacy' | 'terms' | null>(null);
@@ -74,12 +75,22 @@ export function Footer() {
               <h4 className="section-label mb-4">{t.contactHeader}</h4>
               <ul className="space-y-2.5 text-sm text-zinc-500">
                 <li>
-                  <a href={`mailto:${company.email}`} className="hover:text-white transition-colors link-underline">
+                  <a
+                    href={`mailto:${company.email}`}
+                    onClick={() => trackPixelEvent('Contact', { method: 'email', location: 'footer' })}
+                    className="hover:text-white transition-colors link-underline"
+                  >
                     {company.email}
                   </a>
                 </li>
                 <li>
-                  <a href={company.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors link-underline">
+                  <a
+                    href={company.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackPixelEvent('Contact', { method: 'whatsapp', location: 'footer' })}
+                    className="hover:text-white transition-colors link-underline"
+                  >
                     {company.phone}
                   </a>
                 </li>

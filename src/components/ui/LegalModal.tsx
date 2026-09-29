@@ -76,9 +76,9 @@ export function LegalModal({ type, onClose }: LegalModalProps) {
                   La información recopilada se utiliza exclusivamente para responder a tus consultas comerciales, evaluar propuestas de proyectos de software y mantener la comunicación profesional requerida. No vendemos, alquilamos ni compartimos tus datos personales con terceros para fines publicitarios.
                 </p>
 
-                <h3 className="font-display text-base font-semibold text-white pt-2">3. Métrica de uso sin cookies</h3>
+                <h3 className="font-display text-base font-semibold text-white pt-2">3. Cookies y métricas de uso</h3>
                 <p>
-                  Utilizamos Umami Analytics para medir de forma anónima y agregada el tráfico de nuestro sitio. No utilizamos cookies de rastreo publicitario ni almacenamos datos de identificación personal del visitante.
+                  Utilizamos Umami Analytics para medir de forma anónima y agregada el tráfico de nuestro sitio, y Meta Pixel para medir la efectividad de nuestras campañas de difusión y optimizar la experiencia de contacto. No comercializamos datos de identificación personal con terceros.
                 </p>
 
                 <h3 className="font-display text-base font-semibold text-white pt-2">4. Derechos del titular de datos</h3>
