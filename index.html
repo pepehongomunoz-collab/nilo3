@@ -8,11 +8,11 @@
   <!-- Security Headers -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
-    script-src 'self' 'unsafe-inline' https://cloud.umami.is;
+    script-src 'self' 'unsafe-inline' https://cloud.umami.is https://connect.facebook.net;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com https://cdn.fontshare.com;
     font-src 'self' data: https://fonts.gstatic.com https://api.fontshare.com https://cdn.fontshare.com;
     img-src 'self' data: blob: https:;
-    connect-src 'self' https://cloud.umami.is https://gateway.umami.is https://raw.githack.com https://*.githubusercontent.com;
+    connect-src 'self' https://cloud.umami.is https://gateway.umami.is https://raw.githack.com https://*.githubusercontent.com https://www.facebook.com;
     object-src 'none';
     base-uri 'self';
   " />
@@ -84,9 +84,28 @@
 
   <!-- Analytics (privacy-friendly, no cookies) -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="0e30fc65-3ec3-4239-9066-f161ed9d385b" crossorigin="anonymous"></script>
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1852729649219039');
+    fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
 </head>
 
 <body>
+  <!-- Meta Pixel noscript fallback -->
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1852729649219039&ev=PageView&noscript=1"
+  /></noscript>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
