@@ -11,16 +11,18 @@ import { getTranslation } from '../../i18n/translations';
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
   const lenis = useLenis();
   const { language } = useLanguage();
   const t = getTranslation(language).nav;
 
   const dynamicNavLinks = [
-    { name: t.about, href: '#manifesto' },
-    { name: t.projects, href: '#cases' },
-    { name: t.services, href: '#services' },
-    { name: t.process, href: '#process' },
-    { name: t.contact, href: '#contact' },
+    { name: t.about, href: '#manifesto', external: false },
+    { name: t.projects, href: '#cases', external: false },
+    { name: t.services, href: '#services', external: false },
+    { name: t.process, href: '#process', external: false },
+    { name: t.contact, href: '#contact', external: false },
+    { name: t.support, href: 'https://support.nilotech.online', external: true },
   ];
 
   useEffect(() => {
@@ -28,6 +30,38 @@ export function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Scroll spy — highlight active section in navbar
+  useEffect(() => {
+    const sectionIds = dynamicNavLinks
+      .filter((l) => !l.external)
+      .map((l) => l.href.replace('#', ''));
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Pick the most visible intersecting section
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) {
+          setActiveSection(visible[0].target.id);
+        }
+      },
+      {
+        // Bias toward the top third of the viewport — feels natural with the fixed navbar
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: [0, 0.1, 0.25, 0.5, 1],
+      }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]);
 
   const scrollTo = (href: string) => {
     setIsMobileMenuOpen(false);
@@ -76,15 +110,37 @@ export function Navbar() {
 
             {/* Desktop links */}
             <div className="hidden lg:flex items-center gap-1">
-              {dynamicNavLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => scrollTo(link.href)}
-                  className="link-underline px-4 py-2 text-sm font-medium text-zinc-500 hover:text-white transition-colors"
-                >
-                  {link.name}
-                </button>
-              ))}
+              {dynamicNavLinks.map((link) => {
+                if (link.external) {
+                  return (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link-underline px-4 py-2 text-sm font-medium transition-colors text-zinc-500 hover:text-white"
+                    >
+                      {link.name}
+                    </a>
+                  );
+                }
+
+                const isActive = activeSection === link.href.replace('#', '');
+                return (
+                  <button
+                    key={link.href}
+                    onClick={() => scrollTo(link.href)}
+                    className={`link-underline px-4 py-2 text-sm font-medium transition-colors ${
+                      isActive
+                        ? 'text-white'
+                        : 'text-zinc-500 hover:text-white'
+                    }`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {link.name}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Desktop Actions (Language Selector + CTA) */}
@@ -123,18 +179,38 @@ export function Navbar() {
               className="lg:hidden fixed inset-0 top-[60px] bg-void/95 backdrop-blur-2xl z-40"
             >
               <div className="site-container py-12 flex flex-col gap-2">
-                {dynamicNavLinks.map((link, i) => (
-                  <motion.button
-                    key={link.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                    onClick={() => scrollTo(link.href)}
-                    className="text-left py-4 text-2xl font-display font-bold text-zinc-300 hover:text-white border-b border-white/[0.04] transition-colors"
-                  >
-                    {link.name}
-                  </motion.button>
-                ))}
+                {dynamicNavLinks.map((link, i) => {
+                  if (link.external) {
+                    return (
+                      <motion.a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-left py-4 text-2xl font-display font-bold text-zinc-300 hover:text-white border-b border-white/[0.04] transition-colors"
+                      >
+                        {link.name}
+                      </motion.a>
+                    );
+                  }
+
+                  return (
+                    <motion.button
+                      key={link.href}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                      onClick={() => scrollTo(link.href)}
+                      className="text-left py-4 text-2xl font-display font-bold text-zinc-300 hover:text-white border-b border-white/[0.04] transition-colors"
+                    >
+                      {link.name}
+                    </motion.button>
+                  );
+                })}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

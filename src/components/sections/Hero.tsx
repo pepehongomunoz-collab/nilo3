@@ -236,6 +236,24 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 site-container w-full text-center pt-32 pb-20">
+        {/* Availability badge — trust signal */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0 }}
+          className="flex justify-center mb-8"
+        >
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-white/[0.06] bg-white/[0.02] backdrop-blur-md px-4 py-1.5">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            <span className="text-xs font-mono tracking-wider text-zinc-300 uppercase">
+              {t.availableBadge}
+            </span>
+          </div>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

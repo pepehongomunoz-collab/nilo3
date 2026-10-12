@@ -12,6 +12,7 @@ const Services = lazy(() => import('./components/sections/Services').then(m => (
 const TechStack = lazy(() => import('./components/sections/TechStack').then(m => ({ default: m.TechStack })));
 const Numbers = lazy(() => import('./components/sections/Numbers').then(m => ({ default: m.Numbers })));
 const Testimonials = lazy(() => import('./components/sections/Testimonials').then(m => ({ default: m.Testimonials })));
+const FAQ = lazy(() => import('./components/sections/FAQ').then(m => ({ default: m.FAQ })));
 const CallToAction = lazy(() => import('./components/sections/CallToAction').then(m => ({ default: m.CallToAction })));
 const Contact = lazy(() => import('./components/sections/Contact').then(m => ({ default: m.Contact })));
 const Footer = lazy(() => import('./components/layout/Footer').then(m => ({ default: m.Footer })));
@@ -35,12 +36,12 @@ function App() {
           {/* Scene 1: The Statement — eager */}
           <Hero />
 
-          {/* Scene 2: The Provocation — eager */}
+          {/* Scene 2: The Provocation — short tagline, stays as transition */}
           <Manifesto />
 
-          {/* Scene 3: The Proof */}
+          {/* Scene 3: The Capabilities (moved up — the user wants to know WHAT we do before HOW) */}
           <Suspense fallback={null}>
-            <Cases />
+            <Services />
           </Suspense>
 
           {/* Scene 4: The Method */}
@@ -48,9 +49,9 @@ function App() {
             <Process />
           </Suspense>
 
-          {/* Scene 5: The Capabilities */}
+          {/* Scene 5: The Proof */}
           <Suspense fallback={null}>
-            <Services />
+            <Cases />
           </Suspense>
 
           {/* Scene 6: The Stack (Three.js) */}
@@ -66,6 +67,11 @@ function App() {
           {/* Scene 8: The Voices */}
           <Suspense fallback={null}>
             <Testimonials />
+          </Suspense>
+
+          {/* Scene 8.5: FAQ — objection handling */}
+          <Suspense fallback={null}>
+            <FAQ />
           </Suspense>
 
           {/* Scene 9: The Invitation */}

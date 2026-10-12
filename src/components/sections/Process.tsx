@@ -29,6 +29,10 @@ export function Process() {
     const opacitySetters = Array.from(cards).map(card => gsap.quickSetter(card, 'opacity'));
     const scaleSetters = Array.from(cards).map(card => gsap.quickSetter(card, 'scale'));
 
+    // Hide the scroll hint after the user has progressed a bit
+    const hint = container.querySelector('[data-process-hint]') as HTMLElement | null;
+    let hintHidden = false;
+
     // Pin and horizontal scroll
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -42,6 +46,12 @@ export function Process() {
           const progress = self.progress;
           const maxIndex = Math.max(1, cards.length - 1);
           const invMaxIndex = 1.2 / maxIndex;
+          
+          // Fade out the scroll hint after ~5% progress
+          if (hint && !hintHidden && progress > 0.05) {
+            hintHidden = true;
+            gsap.to(hint, { opacity: 0, duration: 0.5, ease: 'power2.out' });
+          }
           
           for (let i = 0; i < cards.length; i++) {
             const target = i / maxIndex;
@@ -100,6 +110,29 @@ export function Process() {
           <p className="text-zinc-500 max-w-md mb-8">
             {t.subtitle}
           </p>
+          {/* Scroll hint — appears until the user starts scrolling horizontally */}
+          <div
+            className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-zinc-600 uppercase mb-4 transition-opacity duration-500"
+            data-process-hint
+          >
+            <span>{t.scrollHint}</span>
+            <svg
+              width="20"
+              height="12"
+              viewBox="0 0 20 12"
+              fill="none"
+              className="animate-pulse"
+              aria-hidden="true"
+            >
+              <path
+                d="M2 6h14M10 1l6 5-6 5"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </div>
 
         <div className="process-track flex gap-8 pl-20 pr-[40vw] pb-24 pt-8">

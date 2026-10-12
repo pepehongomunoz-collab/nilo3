@@ -14,10 +14,11 @@ export function Footer() {
   const navT = getTranslation(language).nav;
 
   const dynamicCompanyLinks = [
-    { name: navT.about, href: '#manifesto' },
-    { name: navT.projects, href: '#cases' },
-    { name: navT.process, href: '#process' },
-    { name: navT.contact, href: '#contact' },
+    { name: navT.about, href: '#manifesto', external: false },
+    { name: navT.projects, href: '#cases', external: false },
+    { name: navT.process, href: '#process', external: false },
+    { name: navT.contact, href: '#contact', external: false },
+    { name: navT.support, href: 'https://support.nilotech.online', external: true },
   ];
 
   return (
@@ -63,7 +64,11 @@ export function Footer() {
               <ul className="space-y-2.5">
                 {dynamicCompanyLinks.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href} className="text-sm text-zinc-500 hover:text-white transition-colors link-underline">
+                    <a
+                      href={link.href}
+                      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="text-sm text-zinc-500 hover:text-white transition-colors link-underline"
+                    >
                       {link.name}
                     </a>
                   </li>

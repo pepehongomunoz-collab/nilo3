@@ -16,9 +16,43 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'rate-limited'>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const { language } = useLanguage();
   const t = getTranslation(language).contact;
   const servicesList = getTranslation(language).services.items;
+
+  const validateField = (name: string, value: string): string | undefined => {
+    const v = value.trim();
+    if (name === 'name') {
+      if (!v) return t.nameErrorRequired;
+      if (v.length < 2) return t.nameErrorShort;
+    }
+    if (name === 'email') {
+      if (!v) return t.emailErrorRequired;
+      // Simple but robust email regex
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return t.emailErrorInvalid;
+    }
+    if (name === 'message') {
+      if (!v) return t.messageErrorRequired;
+      if (v.length < 10) return t.messageErrorShort;
+    }
+    return undefined;
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    setErrors((prev) => ({ ...prev, [name]: error }));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    // Clear error as the user types (only re-show on blur)
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+    void value;
+  };
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +81,17 @@ export function Contact() {
     const email = formData.get('email') as string;
     const service = formData.get('service') as string;
     const message = formData.get('message') as string;
+
+    // 3. Inline validation — block submit and surface errors if any
+    const newErrors = {
+      name: validateField('name', name),
+      email: validateField('email', email),
+      message: validateField('message', message),
+    };
+    setErrors(newErrors);
+    if (newErrors.name || newErrors.email || newErrors.message) {
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -168,9 +213,22 @@ export function Contact() {
                     name="name"
                     required
                     maxLength={100}
-                    className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white placeholder:text-zinc-700 focus:outline-none focus:border-signal/50 transition-colors text-sm"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    aria-invalid={!!errors.name}
+                    aria-describedby={errors.name ? 'name-error' : undefined}
+                    className={`w-full bg-transparent border-b pb-3 text-white placeholder:text-zinc-700 focus:outline-none transition-colors text-sm ${
+                      errors.name
+                        ? 'border-warm/70 focus:border-warm'
+                        : 'border-white/[0.08] focus:border-signal/50'
+                    }`}
                     placeholder={t.namePlaceholder}
                   />
+                  {errors.name && (
+                    <p id="name-error" className="mt-2 text-xs text-warm" role="alert">
+                      {errors.name}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="email" className="section-label mb-2 block">{t.emailFieldLabel}</label>
@@ -180,18 +238,32 @@ export function Contact() {
                     name="email"
                     required
                     maxLength={100}
-                    className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white placeholder:text-zinc-700 focus:outline-none focus:border-signal/50 transition-colors text-sm"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? 'email-error' : undefined}
+                    className={`w-full bg-transparent border-b pb-3 text-white placeholder:text-zinc-700 focus:outline-none transition-colors text-sm ${
+                      errors.email
+                        ? 'border-warm/70 focus:border-warm'
+                        : 'border-white/[0.08] focus:border-signal/50'
+                    }`}
                     placeholder={t.emailPlaceholder}
                   />
+                  {errors.email && (
+                    <p id="email-error" className="mt-2 text-xs text-warm" role="alert">
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
               </div>
 
               <div>
-                <label htmlFor="service" className="section-label mb-2 block">Servicio</label>
+                <label htmlFor="service" className="section-label mb-2 block">{t.serviceFieldLabel}</label>
                 <select
                   id="service"
                   name="service"
                   className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white focus:outline-none focus:border-signal/50 transition-colors text-sm appearance-none"
+                  aria-label={t.serviceFieldLabel}
                 >
                   {servicesList.map((svc) => (
                     <option key={svc.id} className="bg-void" value={svc.title}>
@@ -209,9 +281,22 @@ export function Contact() {
                   required
                   rows={4}
                   maxLength={2000}
-                  className="w-full bg-transparent border-b border-white/[0.08] pb-3 text-white placeholder:text-zinc-700 focus:outline-none focus:border-signal/50 transition-colors resize-none text-sm"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? 'message-error' : undefined}
+                  className={`w-full bg-transparent border-b pb-3 text-white placeholder:text-zinc-700 focus:outline-none transition-colors resize-none text-sm ${
+                    errors.message
+                      ? 'border-warm/70 focus:border-warm'
+                      : 'border-white/[0.08] focus:border-signal/50'
+                  }`}
                   placeholder={t.messagePlaceholder}
                 />
+                {errors.message && (
+                  <p id="message-error" className="mt-2 text-xs text-warm" role="alert">
+                    {errors.message}
+                  </p>
+                )}
               </div>
 
               <div className="pt-4">

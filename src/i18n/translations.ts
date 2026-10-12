@@ -10,6 +10,7 @@ export interface TranslationSchema {
     services: string;
     process: string;
     contact: string;
+    support: string;
     startProject: string;
     openMenu: string;
     closeMenu: string;
@@ -56,6 +57,7 @@ export interface TranslationSchema {
     label: string;
     title: string;
     subtitle: string;
+    scrollHint: string;
     deliverablesLabel: string;
     steps: Array<{
       id: string;
@@ -108,6 +110,15 @@ export interface TranslationSchema {
       company: string;
     }>;
   };
+  faq: {
+    label: string;
+    title: string;
+    items: Array<{
+      id: string;
+      question: string;
+      answer: string;
+    }>;
+  };
   cta: {
     headline: string;
     button: string;
@@ -128,12 +139,20 @@ export interface TranslationSchema {
     companyPlaceholder: string;
     phoneFieldLabel: string;
     phonePlaceholder: string;
+    serviceFieldLabel: string;
     messageLabel: string;
     messagePlaceholder: string;
     submitButton: string;
     submitting: string;
     successMessage: string;
     errorMessage: string;
+    // Inline validation messages
+    nameErrorRequired: string;
+    nameErrorShort: string;
+    emailErrorRequired: string;
+    emailErrorInvalid: string;
+    messageErrorRequired: string;
+    messageErrorShort: string;
     rateLimitMessage: (seconds: number) => string;
   };
   footer: {
@@ -165,16 +184,17 @@ export const translations: Record<Language, TranslationSchema> = {
       services: 'Servicios',
       process: 'Proceso',
       contact: 'Contacto',
+      support: 'Soporte',
       startProject: 'Iniciar proyecto',
       openMenu: 'Abrir menú',
       closeMenu: 'Cerrar menú',
     },
     hero: {
       label: 'Partner Tecnológico',
-      titlePart1: 'Creamos software que',
-      titlePart2: 'impulsa empresas',
-      titlePart3: 'al siguiente nivel.',
-      subtitle: 'Diseñamos y construimos productos digitales de alto rendimiento con precisión de ingeniería y foco en resultados de negocio.',
+      titlePart1: 'Software a medida que',
+      titlePart2: 'reduce costos y',
+      titlePart3: 'automatiza tu operativa.',
+      subtitle: 'Diseñamos y construimos sistemas que eliminan tareas manuales, conectan tus plataformas y medimos el impacto en tu negocio. ROI verificable.',
       ctaPrimary: 'Iniciar proyecto',
       ctaSecondary: 'Ver proyectos',
       availableBadge: 'Disponibles para nuevos proyectos',
@@ -201,7 +221,7 @@ export const translations: Record<Language, TranslationSchema> = {
           description: 'Plataforma integral B2B/B2C diseñada para automatizar la operación comercial. Incluye tienda digital interactiva, punto de venta (POS), gestión de inventario en tiempo real y un módulo financiero para la administración económica del negocio.',
           challenge: 'Operativa fragmentada entre ventas presenciales y digitales, con procesos administrativos y control de stock manuales.',
           result: 'Centralización operativa total, automatizando la facturación y reduciendo el tiempo de gestión administrativa.',
-          kpiLabel: 'Operación centralizada',
+          kpiLabel: 'Tiempo administrativo',
         },
         {
           id: 'newbery',
@@ -210,7 +230,7 @@ export const translations: Record<Language, TranslationSchema> = {
           description: 'Ecosistema móvil de gestión institucional y deportiva. Arquitectura multi-rol (Directivos, Técnicos, Tutores, Jugadores) con acceso centralizado a fixtures, formaciones, noticias, y un sistema de carnet digital interactivo. Integra módulo de cobranzas y tienda oficial.',
           challenge: 'Descoordinación en la comunicación interna, gestión de categorías ineficiente y procesos de cobranza manuales.',
           result: 'Digitalización absoluta del club, agilizando el pago de cuotas y unificando la comunicación deportiva y administrativa.',
-          kpiLabel: 'Roles integrados',
+          kpiLabel: 'Cobranza manual',
         },
         {
           id: 'psicologa',
@@ -219,7 +239,52 @@ export const translations: Record<Language, TranslationSchema> = {
           description: 'Landing page de alto rendimiento orientada a conversión. Arquitectura de información diseñada para destacar metodologías clínicas y servicios terapéuticos. Incluye integración fluida con canales de contacto y agenda.',
           challenge: 'Falta de presencia digital profesional que refleje la calidad de la metodología de trabajo.',
           result: 'Canal de adquisición digital optimizado, con tiempos de carga casi instantáneos y alta retención de usuarios.',
-          kpiLabel: 'Tiempo de carga',
+          kpiLabel: 'Consultas online',
+        },
+        {
+          id: 'pos-pyme',
+          title: 'POS Pyme',
+          category: 'Sistema a Medida',
+          description: 'Punto de venta y gestión de stock para una cadena de 4 locales. Facturación electrónica, reportes en tiempo real y sincronización multi-sucursal.',
+          challenge: 'Ventas dispersas entre sucursales, sin visibilidad consolidada de stock ni facturación automática.',
+          result: 'Unificación operativa entre 4 locales, facturación 100% electrónica, stock sincronizado en tiempo real.',
+          kpiLabel: 'Sucursales sincronizadas',
+        },
+        {
+          id: 'automate-logistics',
+          title: 'Logistics Flow',
+          category: 'Automatización',
+          description: 'Sistema de orquestación de pedidos que conecta el e-commerce del cliente con su ERP y 3 transportistas. Ruteo automático y notificaciones a los compradores.',
+          challenge: 'Carga manual de cada envío en 3 sistemas distintos, errores de ruteo y tickets de soporte por falta de tracking.',
+          result: 'Eliminación del 90% de la carga manual. Tracking en tiempo real para el comprador y reducción de tickets.',
+          kpiLabel: 'Carga manual',
+        },
+        {
+          id: 'payments-gateway',
+          title: 'Payments Hub',
+          category: 'Integración',
+          description: 'Capa de integración con 5 pasarelas de pago (MercadoPago, Stripe, PayPal, Naranja X, TodoPago) con fallback automático y conciliación bancaria.',
+          challenge: 'Una sola pasarela con alta tasa de rechazos y conciliación manual al cierre de cada día.',
+          result: 'Tasa de aprobación +18% por fallback inteligente. Conciliación automática al cierre del día.',
+          kpiLabel: 'Aprobación de pagos',
+        },
+        {
+          id: 'ai-assistant',
+          title: 'AI Assistant B2B',
+          category: 'IA Aplicada',
+          description: 'Asistente conversacional para un proveedor B2B. Responde consultas de catálogo, stock y estado de pedido integrándose al ERP vía API. Escalado a WhatsApp + web.',
+          challenge: 'Volumen alto de consultas repetitivas saturando al equipo comercial. Respuestas demoradas fuera del horario laboral.',
+          result: 'Atención 24/7, 70% de consultas resueltas sin intervención humana, triage automático al equipo comercial.',
+          kpiLabel: 'Auto-resolución',
+        },
+        {
+          id: 'corporate-site',
+          title: 'Site Corporativo FinTech',
+          category: 'Desarrollo Web',
+          description: 'Sitio corporativo para una fintech con foco en conversión de leads B2B. Blog técnico con MDX, optimización SEO avanzada y A/B testing de hero.',
+          challenge: 'Sitio anterior con Lighthouse 45, sin captura de leads y mal posicionamiento orgánico.',
+          result: 'Lighthouse 98+ en todos los Core Web Vitals, leads cualificados +210% en 4 meses.',
+          kpiLabel: 'Leads cualificados',
         },
       ],
       stats: [
@@ -233,6 +298,7 @@ export const translations: Record<Language, TranslationSchema> = {
       label: 'Metodología',
       title: 'Cómo trabajamos',
       subtitle: 'Un proceso transparente e iterativo orientado a minimizar riesgos y acelerar el time-to-market.',
+      scrollHint: 'Desplazá para explorar',
       deliverablesLabel: 'Entregables principales:',
       steps: [
         {
@@ -392,6 +458,27 @@ export const translations: Record<Language, TranslationSchema> = {
         },
       ],
     },
+    faq: {
+      label: 'Preguntas frecuentes',
+      title: 'Antes de escribirnos, quizá te preguntás esto',
+      items: [
+        {
+          id: 'price',
+          question: '¿Cuánto cuesta un proyecto a medida?',
+          answer: 'No hay un precio único: depende del alcance, las integraciones y el plazo. Lo que sí te garantizamos es un presupuesto cerrado antes de empezar, sin sorpresas ni horas facturadas por fuera. Hacemos una estimación gratuita en la primera reunión.',
+        },
+        {
+          id: 'timeline',
+          question: '¿En cuánto tiempo tengo mi software funcionando?',
+          answer: 'Un MVP playable suele estar en producción entre 6 y 12 semanas. Trabajamos en sprints semanales con entregas incrementales: vas a ver avances reales desde la segunda semana, no un release único al final.',
+        },
+        {
+          id: 'quality',
+          question: '¿Por qué Nilotech y no una software factory más grande?',
+          answer: 'Construye siempre el mismo equipo senior de principio a fin, no rotás devs ni pasás el proyecto a un team junior. Hablás directo con quien toma decisiones técnicas, sin capas de account managers. Y post-lanzamiento respondemos en menos de 24h.',
+        },
+      ],
+    },
     cta: {
       headline: 'Construyamos algo juntos.',
       button: 'Iniciar proyecto',
@@ -412,12 +499,19 @@ export const translations: Record<Language, TranslationSchema> = {
       companyPlaceholder: 'Nombre de tu empresa',
       phoneFieldLabel: 'Teléfono',
       phonePlaceholder: '+54 9 11 ...',
+      serviceFieldLabel: 'Servicio',
       messageLabel: '¿En qué te podemos ayudar? *',
       messagePlaceholder: 'Contanos sobre tu proyecto, objetivos, plazos o cualquier detalle relevante...',
       submitButton: 'Enviar mensaje',
       submitting: 'Enviando...',
       successMessage: '¡Mensaje enviado con éxito! Nos pondremos en contacto en breve.',
       errorMessage: 'Error al enviar. Intentá de nuevo o escribinos por WhatsApp.',
+      nameErrorRequired: 'El nombre es obligatorio.',
+      nameErrorShort: 'El nombre es demasiado corto.',
+      emailErrorRequired: 'El email es obligatorio.',
+      emailErrorInvalid: 'Ingresá un email válido.',
+      messageErrorRequired: 'Contanos sobre tu proyecto.',
+      messageErrorShort: 'Agregá un poco más de detalle.',
       rateLimitMessage: (sec: number) => `Por favor esperá ${sec} segundos antes de enviar otro mensaje.`,
     },
     footer: {
@@ -436,6 +530,7 @@ export const translations: Record<Language, TranslationSchema> = {
         'Automatización',
         'Integraciones',
         'IA Aplicada',
+        'Desarrollo Web',
         'Publicidad Digital',
       ],
     },
@@ -454,16 +549,17 @@ export const translations: Record<Language, TranslationSchema> = {
       services: 'Services',
       process: 'Process',
       contact: 'Contact',
+      support: 'Support',
       startProject: 'Start a project',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',
     },
     hero: {
       label: 'Technology Partner',
-      titlePart1: 'We build software that',
-      titlePart2: 'propels businesses',
-      titlePart3: 'to the next level.',
-      subtitle: 'We design and engineer high-performance digital products with engineering precision and focus on business results.',
+      titlePart1: 'Custom software that',
+      titlePart2: 'cuts costs and',
+      titlePart3: 'automates your operations.',
+      subtitle: 'We design and build systems that eliminate manual work, connect your platforms and let us measure the business impact. Verifiable ROI.',
       ctaPrimary: 'Start a project',
       ctaSecondary: 'View projects',
       availableBadge: 'Available for new projects',
@@ -490,7 +586,7 @@ export const translations: Record<Language, TranslationSchema> = {
           description: 'Comprehensive B2B/B2C platform designed to automate commercial operations. Includes an interactive digital store, POS system, real-time inventory management, and a financial module.',
           challenge: 'Fragmented operations between in-person and digital sales, with manual administrative and stock control processes.',
           result: 'Total operational centralization, automating invoicing and reducing administrative management time.',
-          kpiLabel: 'Centralized Operation',
+          kpiLabel: 'Administrative time',
         },
         {
           id: 'newbery',
@@ -499,7 +595,7 @@ export const translations: Record<Language, TranslationSchema> = {
           description: 'Mobile ecosystem for institutional and sports management. Multi-role architecture (Executives, Coaches, Tutors, Players) with centralized access to fixtures, digital membership card, and payments.',
           challenge: 'Lack of coordination in internal communication, inefficient category management, and manual fee collection processes.',
           result: 'Complete digitalization of the club, streamlining fee payments and unifying sports and administrative communication.',
-          kpiLabel: 'Integrated Roles',
+          kpiLabel: 'Manual collections',
         },
         {
           id: 'psicologa',
@@ -508,7 +604,52 @@ export const translations: Record<Language, TranslationSchema> = {
           description: 'High-performance conversion-oriented landing page. Information architecture designed to showcase clinical methodologies and therapeutic services.',
           challenge: 'Lack of a professional digital presence reflecting the quality of the therapeutic methodology.',
           result: 'Optimized digital acquisition channel with near-instant load times and high user retention.',
-          kpiLabel: 'Load time',
+          kpiLabel: 'Online queries',
+        },
+        {
+          id: 'pos-pyme',
+          title: 'POS Pyme',
+          category: 'Custom System',
+          description: 'Point of sale and stock management for a 4-store chain. Electronic invoicing, real-time reports and multi-branch synchronization.',
+          challenge: 'Scattered sales between branches, no consolidated stock visibility and no automatic invoicing.',
+          result: 'Operational unification across 4 stores, 100% electronic invoicing, real-time synchronized stock.',
+          kpiLabel: 'Synced branches',
+        },
+        {
+          id: 'automate-logistics',
+          title: 'Logistics Flow',
+          category: 'Automation',
+          description: 'Order orchestration system connecting the client ecommerce with their ERP and 3 carriers. Automatic routing and buyer notifications.',
+          challenge: 'Manual entry of each shipment into 3 separate systems, routing errors and support tickets from missing tracking.',
+          result: 'Eliminated 90% of manual workload. Real-time tracking for the buyer and ticket reduction.',
+          kpiLabel: 'Manual workload',
+        },
+        {
+          id: 'payments-gateway',
+          title: 'Payments Hub',
+          category: 'Integration',
+          description: 'Integration layer with 5 payment gateways (MercadoPago, Stripe, PayPal, Naranja X, TodoPago) with automatic fallback and bank reconciliation.',
+          challenge: 'A single gateway with high rejection rates and manual reconciliation at end of day.',
+          result: 'Approval rate +18% via smart fallback. Automatic reconciliation at close of day.',
+          kpiLabel: 'Payment approval',
+        },
+        {
+          id: 'ai-assistant',
+          title: 'AI Assistant B2B',
+          category: 'Applied AI',
+          description: 'Conversational assistant for a B2B supplier. Handles catalog, stock and order-status queries by integrating with the ERP via API. Scaled to WhatsApp + web.',
+          challenge: 'High volume of repetitive queries overwhelming the commercial team. Delayed responses outside business hours.',
+          result: '24/7 service, 70% of queries resolved without human intervention, automatic triage to the commercial team.',
+          kpiLabel: 'Auto-resolution',
+        },
+        {
+          id: 'corporate-site',
+          title: 'FinTech Corporate Site',
+          category: 'Web Development',
+          description: 'Corporate site for a fintech focused on B2B lead conversion. Technical blog with MDX, advanced SEO and A/B testing of hero.',
+          challenge: 'Previous site with Lighthouse 45, no lead capture and poor organic ranking.',
+          result: 'Lighthouse 98+ on all Core Web Vitals, qualified leads +210% in 4 months.',
+          kpiLabel: 'Qualified leads',
         },
       ],
       stats: [
@@ -522,6 +663,7 @@ export const translations: Record<Language, TranslationSchema> = {
       label: 'Methodology',
       title: 'How We Work',
       subtitle: 'A transparent and iterative process aimed at minimizing risk and accelerating time-to-market.',
+      scrollHint: 'Scroll to explore',
       deliverablesLabel: 'Key deliverables:',
       steps: [
         {
@@ -681,6 +823,27 @@ export const translations: Record<Language, TranslationSchema> = {
         },
       ],
     },
+    faq: {
+      label: 'FAQ',
+      title: 'Before reaching out, you might be wondering',
+      items: [
+        {
+          id: 'price',
+          question: 'How much does a custom project cost?',
+          answer: 'There is no single price: it depends on scope, integrations and timeline. What we do guarantee is a fixed quote before we start, with no surprises or hours billed on the side. We offer a free estimate in the first call.',
+        },
+        {
+          id: 'timeline',
+          question: 'How long until my software is live?',
+          answer: 'A shippable MVP usually goes to production within 6 to 12 weeks. We work in weekly sprints with incremental deliveries: you see real progress from week two, not a single release at the end.',
+        },
+        {
+          id: 'quality',
+          question: 'Why Nilotech and not a bigger software factory?',
+          answer: 'The same senior team builds it from start to finish, no rotating devs and no hand-off to a junior team. You talk directly with the people making technical decisions, with no layer of account managers. And after launch we respond in under 24h.',
+        },
+      ],
+    },
     cta: {
       headline: 'Let\'s build something together.',
       button: 'Start a project',
@@ -701,12 +864,19 @@ export const translations: Record<Language, TranslationSchema> = {
       companyPlaceholder: 'Your company name',
       phoneFieldLabel: 'Phone',
       phonePlaceholder: '+1 ...',
+      serviceFieldLabel: 'Service',
       messageLabel: 'How can we help you? *',
       messagePlaceholder: 'Tell us about your project, goals, timelines or any relevant details...',
       submitButton: 'Send message',
       submitting: 'Sending...',
       successMessage: 'Message sent successfully! We will get in touch shortly.',
       errorMessage: 'Error sending message. Please try again or reach out via WhatsApp.',
+      nameErrorRequired: 'Name is required.',
+      nameErrorShort: 'Name is too short.',
+      emailErrorRequired: 'Email is required.',
+      emailErrorInvalid: 'Please enter a valid email.',
+      messageErrorRequired: 'Tell us about your project.',
+      messageErrorShort: 'Please add a little more detail.',
       rateLimitMessage: (sec: number) => `Please wait ${sec} seconds before sending another message.`,
     },
     footer: {
@@ -725,6 +895,7 @@ export const translations: Record<Language, TranslationSchema> = {
         'Automation',
         'Integrations',
         'Applied AI',
+        'Web Development',
         'Digital Ads',
       ],
     },
@@ -743,16 +914,17 @@ export const translations: Record<Language, TranslationSchema> = {
       services: 'Serviços',
       process: 'Processo',
       contact: 'Contato',
+      support: 'Suporte',
       startProject: 'Iniciar projeto',
       openMenu: 'Abrir menu',
       closeMenu: 'Fechar menu',
     },
     hero: {
       label: 'Parceiro Tecnológico',
-      titlePart1: 'Criamos software que',
-      titlePart2: 'impulsa empresas',
-      titlePart3: 'ao próximo nível.',
-      subtitle: 'Projetamos e desenvolvemos produtos digitais de alto desempenho com precisão de engenharia e foco em resultados de negócios.',
+      titlePart1: 'Software sob medida que',
+      titlePart2: 'reduz custos e',
+      titlePart3: 'automatiza sua operação.',
+      subtitle: 'Projetamos e construímos sistemas que eliminam trabalho manual, conectam suas plataformas e medem o impacto no negócio. ROI verificável.',
       ctaPrimary: 'Iniciar projeto',
       ctaSecondary: 'Ver projetos',
       availableBadge: 'Disponível para novos projetos',
@@ -779,7 +951,7 @@ export const translations: Record<Language, TranslationSchema> = {
           description: 'Plataforma abrangente B2B/B2C para automatizar a operação comercial. Inclui loja digital interativa, sistema de PDV, gestão de estoque em tempo real e módulo financeiro.',
           challenge: 'Operações fragmentadas entre vendas presenciais e digitais, com processos administrativos e controle de estoque manuais.',
           result: 'Centralização operacional total, automatizando o faturamento e reduzindo o tempo de gestão administrativa.',
-          kpiLabel: 'Operação centralizada',
+          kpiLabel: 'Tempo administrativo',
         },
         {
           id: 'newbery',
@@ -788,7 +960,7 @@ export const translations: Record<Language, TranslationSchema> = {
           description: 'Ecossistema móvel para gestão institucional e esportiva. Arquitetura multi-função (Diretores, Técnicos, Tutores, Jogadores) com acesso centralizado a jogos, carteirinha digital e cobranças.',
           challenge: 'Falta de coordenação na comunicação interna, gestão ineficiente de categorias e cobrança manual de mensalidades.',
           result: 'Digitalização completa do clube, agilizando o pagamento de mensalidades e unificando a comunicação esportiva e administrativa.',
-          kpiLabel: 'Funções integradas',
+          kpiLabel: 'Cobrança manual',
         },
         {
           id: 'psicologa',
@@ -797,7 +969,52 @@ export const translations: Record<Language, TranslationSchema> = {
           description: 'Landing page de alto desempenho orientada para conversão. Arquitetura de informação criada para destacar metodologias clínicas e serviços terapêuticos.',
           challenge: 'Falta de presença digital profissional que refletisse a qualidade da metodologia terapêutica.',
           result: 'Canal de aquisição digital otimizado, com tempos de carregamento quase instantâneos e alta retenção de usuários.',
-          kpiLabel: 'Tempo de carga',
+          kpiLabel: 'Consultas online',
+        },
+        {
+          id: 'pos-pyme',
+          title: 'POS Pyme',
+          category: 'Sistema Sob Medida',
+          description: 'Ponto de venda e gestão de estoque para uma rede de 4 lojas. Faturamento eletrônico, relatórios em tempo real e sincronização multi-filial.',
+          challenge: 'Vendas dispersas entre filiais, sem visibilidade consolidada de estoque e sem faturamento automático.',
+          result: 'Unificação operacional entre 4 lojas, faturamento 100% eletrônico, estoque sincronizado em tempo real.',
+          kpiLabel: 'Filiais sincronizadas',
+        },
+        {
+          id: 'automate-logistics',
+          title: 'Logistics Flow',
+          category: 'Automação',
+          description: 'Sistema de orquestração de pedidos conectando o e-commerce do cliente com seu ERP e 3 transportadoras. Roteamento automático e notificações aos compradores.',
+          challenge: 'Entrada manual de cada envio em 3 sistemas distintos, erros de roteamento e tickets por falta de rastreio.',
+          result: 'Eliminação de 90% da carga manual. Rastreio em tempo real para o comprador e redução de tickets.',
+          kpiLabel: 'Carga manual',
+        },
+        {
+          id: 'payments-gateway',
+          title: 'Payments Hub',
+          category: 'Integração',
+          description: 'Camada de integração com 5 gateways de pagamento (MercadoPago, Stripe, PayPal, Naranja X, TodoPago) com fallback automático e conciliação bancária.',
+          challenge: 'Um único gateway com alta taxa de rejeição e conciliação manual no fechamento do dia.',
+          result: 'Taxa de aprovação +18% via fallback inteligente. Conciliação automática no fechamento do dia.',
+          kpiLabel: 'Aprovação de pagamentos',
+        },
+        {
+          id: 'ai-assistant',
+          title: 'AI Assistant B2B',
+          category: 'IA Aplicada',
+          description: 'Assistente conversacional para um fornecedor B2B. Responde consultas de catálogo, estoque e status de pedido integrando ao ERP via API. Escalado para WhatsApp + web.',
+          challenge: 'Volume alto de consultas repetitivas sobrecarregando a equipe comercial. Respostas demoradas fora do horário comercial.',
+          result: 'Atendimento 24/7, 70% das consultas resolvidas sem intervenção humana, triagem automática para a equipe comercial.',
+          kpiLabel: 'Auto-resolução',
+        },
+        {
+          id: 'corporate-site',
+          title: 'Site Corporativo FinTech',
+          category: 'Desenvolvimento Web',
+          description: 'Site corporativo para uma fintech com foco em conversão de leads B2B. Blog técnico com MDX, SEO avançado e A/B testing do hero.',
+          challenge: 'Site anterior com Lighthouse 45, sem captura de leads e com mau posicionamento orgânico.',
+          result: 'Lighthouse 98+ em todos os Core Web Vitals, leads qualificados +210% em 4 meses.',
+          kpiLabel: 'Leads qualificados',
         },
       ],
       stats: [
@@ -811,6 +1028,7 @@ export const translations: Record<Language, TranslationSchema> = {
       label: 'Metodologia',
       title: 'Como Trabalhamos',
       subtitle: 'Um processo transparente e iterativo focado em minimizar riscos e acelerar o time-to-market.',
+      scrollHint: 'Role para explorar',
       deliverablesLabel: 'Principais entregáveis:',
       steps: [
         {
@@ -970,6 +1188,27 @@ export const translations: Record<Language, TranslationSchema> = {
         },
       ],
     },
+    faq: {
+      label: 'Perguntas frequentes',
+      title: 'Antes de nos escrever, talvez você se pergunte',
+      items: [
+        {
+          id: 'price',
+          question: 'Quanto custa um projeto sob medida?',
+          answer: 'Não há um preço único: depende do escopo, das integrações e do prazo. O que garantimos é um orçamento fechado antes de começar, sem surpresas nem horas faturadas por fora. Fazemos uma estimativa gratuita na primeira reunião.',
+        },
+        {
+          id: 'timeline',
+          question: 'Em quanto tempo meu software está funcionando?',
+          answer: 'Um MVP publicável costuma ir para produção entre 6 e 12 semanas. Trabalhamos em sprints semanais com entregas incrementais: você vê progresso real desde a segunda semana, não um único release no final.',
+        },
+        {
+          id: 'quality',
+          question: 'Por que a Nilotech e não uma fábrica de software maior?',
+          answer: 'A mesma equipe sênior constrói do início ao fim, sem rotatividade de devs e sem repassar para um time júnior. Você fala diretamente com quem toma decisões técnicas, sem camadas de account managers. E pós-lançamento respondemos em menos de 24h.',
+        },
+      ],
+    },
     cta: {
       headline: 'Vamos construir algo juntos.',
       button: 'Iniciar projeto',
@@ -990,12 +1229,19 @@ export const translations: Record<Language, TranslationSchema> = {
       companyPlaceholder: 'Nome da sua empresa',
       phoneFieldLabel: 'Telefone',
       phonePlaceholder: '+55 11 ...',
+      serviceFieldLabel: 'Serviço',
       messageLabel: 'Como podemos ajudar? *',
       messagePlaceholder: 'Fale sobre o seu projeto, objetivos, prazos ou qualquer detalhe relevante...',
       submitButton: 'Enviar mensagem',
       submitting: 'Enviando...',
       successMessage: 'Mensagem enviada com sucesso! Entraremos em contato em breve.',
       errorMessage: 'Erro ao enviar. Tente novamente ou entre em contato pelo WhatsApp.',
+      nameErrorRequired: 'O nome é obrigatório.',
+      nameErrorShort: 'O nome é muito curto.',
+      emailErrorRequired: 'O email é obrigatório.',
+      emailErrorInvalid: 'Digite um email válido.',
+      messageErrorRequired: 'Conte sobre o seu projeto.',
+      messageErrorShort: 'Adicione um pouco mais de detalhe.',
       rateLimitMessage: (sec: number) => `Aguarde ${sec} segundos antes de enviar outra mensagem.`,
     },
     footer: {
@@ -1014,6 +1260,7 @@ export const translations: Record<Language, TranslationSchema> = {
         'Automação',
         'Integrações',
         'IA Aplicada',
+        'Desenvolvimento Web',
         'Publicidade Digital',
       ],
     },

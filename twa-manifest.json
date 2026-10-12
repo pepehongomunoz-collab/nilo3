@@ -1,0 +1,31 @@
+{
+  "packageId": "online.nilotech.twa",
+  "host": "nilotech.online",
+  "name": "Nilotech",
+  "launcherName": "Nilotech",
+  "themeColor": "#09090B",
+  "navigationColor": "#09090B",
+  "navigationColorDark": "#09090B",
+  "navigationDividerColor": "#09090B",
+  "navigationDividerColorDark": "#09090B",
+  "backgroundColor": "#09090B",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://nilotech.online/images/icon-512.png",
+  "maskableIconUrl": "https://nilotech.online/images/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android-keystore.jks",
+    "alias": "nilotech-key"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://nilotech.online/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  }
+}

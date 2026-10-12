@@ -38,9 +38,23 @@ export function Testimonials() {
               </p>
 
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-surface border border-white/[0.04] flex items-center justify-center">
-                  <span className="text-sm font-bold text-signal">
-                    {testimonial.author.charAt(0)}
+                <div
+                  className="w-12 h-12 rounded-full border border-white/[0.06] flex items-center justify-center shrink-0"
+                  style={{
+                    background:
+                      i % 3 === 0
+                        ? 'radial-gradient(circle at 30% 30%, rgba(255,210,0,0.18), rgba(255,210,0,0.04) 70%)'
+                        : i % 3 === 1
+                        ? 'radial-gradient(circle at 30% 30%, rgba(255,107,53,0.18), rgba(255,107,53,0.04) 70%)'
+                        : 'radial-gradient(circle at 30% 30%, rgba(214,211,209,0.18), rgba(214,211,209,0.04) 70%)',
+                  }}
+                >
+                  <span className="text-sm font-bold text-white tracking-wide">
+                    {testimonial.author
+                      .split(' ')
+                      .map((w) => w.charAt(0))
+                      .slice(0, 2)
+                      .join('')}
                   </span>
                 </div>
                 <div>

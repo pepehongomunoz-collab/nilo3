@@ -4,6 +4,7 @@ export const navLinks = [
   { name: 'Servicios', href: '#services' },
   { name: 'Proceso', href: '#process' },
   { name: 'Contacto', href: '#contact' },
+  { name: 'Soporte', href: 'https://support.nilotech.online', external: true },
 ] as const;
 
 export const footerLinks = {
@@ -13,6 +14,7 @@ export const footerLinks = {
     { name: 'Automatización', href: '#services' },
     { name: 'Integraciones', href: '#services' },
     { name: 'IA Aplicada', href: '#services' },
+    { name: 'Desarrollo Web', href: '#services' },
     { name: 'Publicidad Digital', href: '#services' },
   ],
   company: [
@@ -20,5 +22,6 @@ export const footerLinks = {
     { name: 'Proyectos', href: '#cases' },
     { name: 'Proceso', href: '#process' },
     { name: 'Contacto', href: '#contact' },
+    { name: 'Soporte', href: 'https://support.nilotech.online', external: true },
   ],
 } as const;

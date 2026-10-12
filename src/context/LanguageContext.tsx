@@ -33,6 +33,36 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   useEffect(() => {
     document.documentElement.lang = language;
+    // Sync social preview meta tags with the active language
+    const meta: Record<Language, { title: string; description: string }> = {
+      es: {
+        title: 'Nilotech — Partner Tecnológico · Productos Digitales',
+        description: 'Diseñamos el software que mueve empresas. Productos digitales, automatización e IA aplicada.',
+      },
+      en: {
+        title: 'Nilotech — Technology Partner · Digital Products',
+        description: 'We build the software that drives businesses. Digital products, automation and applied AI.',
+      },
+      pt: {
+        title: 'Nilotech — Parceiro Tecnológico · Produtos Digitais',
+        description: 'Projetamos o software que move empresas. Produtos digitais, automação e IA aplicada.',
+      },
+    };
+    const setMeta = (selector: string, attr: string, value: string) => {
+      const el = document.head.querySelector(selector);
+      if (el) el.setAttribute(attr, value);
+    };
+    const metaAttr = (sel: string, attr: string) =>
+      meta[language].title && setMeta(sel, attr, meta[language].title);
+    // Open Graph
+    setMeta('meta[property="og:title"]', 'content', meta[language].title);
+    setMeta('meta[property="og:description"]', 'content', meta[language].description);
+    // Twitter
+    setMeta('meta[name="twitter:title"]', 'content', meta[language].title);
+    setMeta('meta[name="twitter:description"]', 'content', meta[language].description);
+    // Document title
+    document.title = meta[language].title + ' · Software a Medida';
+    void metaAttr;
   }, [language]);
 
   return (
