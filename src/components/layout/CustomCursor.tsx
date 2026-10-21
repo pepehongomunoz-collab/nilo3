@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 export function CustomCursor() {
+  const [mounted, setMounted] = useState(false);
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -9,6 +10,7 @@ export function CustomCursor() {
   const targetRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    setMounted(true);
     // Only on devices with fine pointer (not touch)
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
     if (isTouch) return;
@@ -60,7 +62,8 @@ export function CustomCursor() {
     };
   }, [isVisible]);
 
-  const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+  if (!mounted) return null;
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
   if (isTouch) return null;
 
   return (

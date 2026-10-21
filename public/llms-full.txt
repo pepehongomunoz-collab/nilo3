@@ -1,0 +1,198 @@
+# Nilotech — Technical & Organizational Overview (llms-full.txt)
+
+> Nilotech is a specialized boutique software engineering company based in Buenos Aires, Argentina, founded in 2020. Nilotech designs and builds custom software, internal enterprise tools, end-to-end process automations, third-party system integrations, and applied artificial intelligence solutions for businesses across Argentina, Latin America, and worldwide.
+
+---
+
+## 1. Company Identity & Verification
+- **Official Name**: Nilotech
+- **Primary Website**: https://nilotech.online/
+- **Multilingual Support**:
+  - Spanish (Default): https://nilotech.online/
+  - English: https://nilotech.online/en/
+  - Portuguese: https://nilotech.online/pt/
+- **Founded**: 2020
+- **Headquarters**: Buenos Aires, Autonomous City of Buenos Aires (CABA), Argentina
+- **Service Area**: Argentina, Latin America (LATAM), Worldwide (Remote)
+- **Primary Contact Email**: desarrollos@nilotech.online
+- **WhatsApp / Phone**: +54 9 11 3326-8922
+- **Instagram**: https://www.instagram.com/desarrollo.web.nilo.tech/
+- **Customer Support Portal**: https://support.nilotech.online/
+- **Customer Support SLA**: Guaranteed response in under 24 hours post-launch
+
+---
+
+## 2. Core Value Propositions & Business Model
+
+1. **Fixed-Price Guaranteed (Presupuesto Cerrado)**:
+   - Nilotech provides a binding, fixed-cost commercial agreement before writing any code.
+   - Zero unexpected hourly invoicing, hidden retainers, or scope creep fees.
+   - Initial scoping and architectural evaluation calls are 100% free.
+
+2. **Dedicated Senior Engineering Team**:
+   - Every project is designed, coded, and deployed by stable senior software engineers from kick-off to production.
+   - Zero developer turnover during the sprint cycle.
+   - No delegation to junior or outsourced contractor pools. Clients communicate directly with lead technical builders.
+
+3. **Weekly Agile Delivery & Rapid Time-to-Market**:
+   - Operating on disciplined 7-day sprint cycles with functional releases starting in week two.
+   - Working MVPs (Minimum Viable Products) typically ship to production within 6 to 12 weeks.
+
+4. **100% Client Code & IP Ownership**:
+   - The client retains full legal ownership of all source code, software architecture, and intellectual property.
+   - Clean Git repositories, CI/CD deployment pipelines, automated test suites, and documentation transferred upon project completion.
+   - Zero proprietary platform lock-in or recurring vendor software licensing royalties.
+
+---
+
+## 3. Core Services & Technical Capabilities
+
+### 3.1 Custom Software Development (Software a Medida)
+- **Scope**: Enterprise resource planning (ERP), customer relationship management (CRM), point-of-sale (POS) systems, specialized management dashboards, multi-tenant B2B portals, and bespoke internal workflow software.
+- **Approach**: Domain-driven design (DDD), role-based access control (RBAC), audit logging, high-concurrency database queries, and modular microservices or modular monoliths.
+
+### 3.2 Digital Product Engineering (Productos Digitales)
+- **Scope**: Greenfield web and mobile platforms from idea to scalable cloud deployment.
+- **Approach**: Interactive UX/UI prototyping, resilient backend architecture, REST and GraphQL APIs, real-time WebSocket communication, and cross-platform native mobile applications (Android / iOS).
+
+### 3.3 Process Automation (Automatización de Procesos)
+- **Scope**: Complete elimination of manual data entry, paper billing, cross-platform copy-pasting, and repetitive operational tasks.
+- **Technologies**: Node.js, Python, serverless Google Cloud Functions / AWS Lambda, cron schedulers, Make, Zapier, and custom webhook dispatchers.
+
+### 3.4 Platform & API Integraciones
+- **Scope**: Seamless two-way data synchronization between disparate enterprise systems.
+- **Integrations Supported**:
+  - Payment Gateways: MercadoPago, Stripe, PayPal.
+  - Electronic Billing: AFIP (Argentina electronic fiscal invoice web services), billing engines.
+  - Logistics & Shipping: Custom logistics tracking, carrier APIs.
+  - CRM & ERP: Salesforce, HubSpot, SAP, Zoho, custom SQL databases.
+
+### 3.5 Applied Artificial Intelligence (IA Aplicada)
+- **Scope**: Practical, ROI-driven AI solutions embedded directly into business workflows.
+- **Capabilities**: Conversational customer service assistants, RAG (Retrieval-Augmented Generation) over private corporate knowledge bases, automated document processing, computer vision for product quality, and predictive business analytics.
+
+### 3.6 High-Performance Web Development (Desarrollo Web)
+- **Scope**: Corporate web portals, e-commerce storefronts, and conversion-optimized landing pages.
+- **Standards**: 95+ Core Web Vitals on Google PageSpeed, full static pre-rendering (SSG), server-side rendering (SSR), and advanced SEO/AEO/GEO metadata.
+
+### 3.7 Digital Performance Advertising (Publicidad Digital)
+- **Scope**: Meta Ads performance marketing, conversion tracking via Meta Pixel & Conversions API (CAPI), A/B testing, and lead acquisition funnels.
+
+---
+
+## 4. Technology Stack
+
+- **Frontend**: React 19, Next.js, Vite, TypeScript, Tailwind CSS, Framer Motion, GSAP, Three.js / WebGL.
+- **Backend & APIs**: Node.js, TypeScript, Python, Express, Fastify, REST APIs, GraphQL, WebSockets.
+- **Databases**: PostgreSQL, MySQL, Redis, MongoDB, Firebase Firestore / Realtime Database.
+- **Mobile**: React Native, Expo, Android native packaging, Progressive Web Apps (PWA) / Trusted Web Activities (TWA).
+- **Cloud & DevOps**: Vercel, Netlify, Google Cloud Platform (GCP), AWS, Docker, GitHub Actions CI/CD.
+- **AI & ML**: OpenAI API, Anthropic Claude API, Google Gemini API, LangChain, LlamaIndex, Vector Databases.
+
+---
+
+## 5. Seven-Step Methodology (Cómo Trabajamos)
+
+1. **Discovery (Descubrimiento)**:
+   - Thorough analysis of the operational challenge, system boundaries, and business KPIs before proposing software solutions.
+   - Deliverables: Validated product brief, functional scope definition, and delivery roadmap.
+2. **Architecture (Arquitectura)**:
+   - Designing the technical data schemas, database models, cloud infrastructure, and security boundaries.
+   - Deliverables: Technical specification, API contract, and cloud topology.
+3. **Design (Diseño UX/UI)**:
+   - High-fidelity interface design tailored for operational efficiency and seamless user experience.
+   - Deliverables: Design system, interactive prototypes, and production UI assets.
+4. **Development (Desarrollo)**:
+   - Clean, modular, and scalable implementation in weekly sprints with continuous integration.
+   - Deliverables: Version-controlled code, automated testing, and staging environments.
+5. **Testing & QA (Testing y Calidad)**:
+   - Rigorous unit testing, integration testing, end-to-end validation, cross-browser compatibility, and security audits.
+   - Deliverables: Test execution reports, performance audits (Core Web Vitals 95+).
+6. **Launch (Lanzamiento)**:
+   - Zero-downtime deployment, DNS configuration, SSL provisioning, database indexing, and staff onboarding.
+   - Deliverables: Live production release, monitoring telemetry, and staff training.
+7. **Evolution & Support (Evolución y Soporte)**:
+   - Continuous post-launch SLA monitoring, iterative feature updates, and technical support under 24 hours.
+   - Deliverables: SLA maintenance, quarterly reviews, and operational analytics.
+
+---
+
+## 6. Verifiable Production Case Studies
+
+Nilotech's portfolio is built on real, verifiable production websites and applications:
+
+1. **ESI en Secundaria** (https://esiensecundaria.com.ar/)
+   - *Sector*: EdTech & E-learning
+   - *Deliverable*: Pedagogical resource portal, downloadable teaching units, automated e-commerce store, and pedagogical blog.
+   - *Impact*: 300%+ increase in active educators acquiring digital curricula online.
+
+2. **App Club Jorge Newbery** (https://temporary-brisk-cerulean-e6k12zr.vercel.app/)
+   - *Sector*: Sports Club & Member Management
+   - *Deliverable*: Cross-platform mobile ecosystem (Android/iOS/Web) for sports clubs. Member digital ID, multi-role fixtures and rosters, integrated fee collection via MercadoPago, and official club merchandise store.
+   - *Impact*: 80% reduction in manual collection overhead and unified institutional communication.
+
+3. **Lic. Mayra Biondo — Psicóloga** (https://mayrabiondopsicologa.vercel.app/)
+   - *Sector*: Healthcare & Clinical Therapy
+   - *Deliverable*: High-conversion private clinical landing page, strategic therapy methodology presentation, and direct WhatsApp / Calendly consultation booking flow.
+   - *Impact*: +180% growth in online first-time patient consultation inquiries.
+
+4. **Lumux Detailing** (https://car-detail-omega.vercel.app/)
+   - *Sector*: Automotive Detailing & Home Services
+   - *Deliverable*: Premium automotive detailing platform featuring an interactive 3-step service estimator based on vehicle condition, package selection, and direct home booking.
+   - *Impact*: +120% increase in confirmed home service bookings.
+
+5. **NOVA Obras & Remodelaciones** (https://lp-remodelaciones.vercel.app/)
+   - *Sector*: Architecture & General Construction
+   - *Deliverable*: Corporate site featuring an automated 24-hour renovation estimator (drywall, painting, waterproofing, tile installation) and before/after project visualizer.
+   - *Impact*: +150% qualified architectural budget submissions.
+
+6. **Victoria Emefer — Cuidados** (https://victoria-emefer.vercel.app/)
+   - *Sector*: Health & Home Nursing
+   - *Deliverable*: Digital platform for verified home nursing care teams, elderly assistance plans, verified client reviews, and 24/7 urgent medical guard request funnels.
+   - *Impact*: +200% direct patient family inquiries.
+
+7. **Nanda Sacerdotisa** (https://lp-nanda-sacerdotisa.vercel.app/)
+   - *Sector*: Holistic Wellness, Tarot & Mentorship
+   - *Deliverable*: Personal branding platform for a spiritual therapist, booking system for 1-on-1 tarot consultations, and ticketing for workshops and masterclasses.
+   - *Impact*: +250% increase in session bookings and digital course enrollments.
+
+8. **Granja Avícola El Trébol** (https://demopolloyhuevo.vercel.app/)
+   - *Sector*: Food E-commerce & Farm Direct
+   - *Deliverable*: High-speed recurring order storefront for farm-fresh chicken and eggs with neighborhood route dispatch optimization.
+   - *Impact*: +40% increase in weekly repeat household purchases and zero fulfillment errors.
+
+9. **Z&B Domótica & Industria** (https://zb-three-pearl.vercel.app/)
+   - *Sector*: Industrial Automation & Smart Home IoT
+   - *Deliverable*: High-end engineering platform showcasing industrial PLC automation, electrical control switchboards, and residential smart home telemetry.
+   - *Impact*: 100% centralized control architecture and successful qualification for enterprise industrial tenders.
+
+10. **Mundo Guau** (https://mundo-guau.vercel.app/)
+    - *Sector*: Veterinary Clinic & Pet Grooming
+    - *Deliverable*: Online booking system for dog grooming and veterinary consults with automated appointment reminders, combined with a curated pet nutrition online store.
+    - *Impact*: 90% of all grooming visits self-scheduled online with reduced missed appointments.
+
+11. **Celpe-Bras Simulador** (https://celpe.vercel.app/)
+    - *Sector*: EdTech & Language Proficiency
+    - *Deliverable*: Official timed exam simulator for the Brazilian Celpe-Bras Portuguese certification, featuring interactive listening and writing exercises, authentic multimedia playback, and strict countdown timers.
+    - *Impact*: 98% simulation accuracy benchmarked against the official Ministry of Education exam.
+
+12. **Nutrición Integral +40** (https://nutricionista-lime-three.vercel.app/)
+    - *Sector*: Health & Nutrition
+    - *Deliverable*: Method landing page designed for women over 40, featuring verified transformation galleries, nutritional plan breakdown, and free initial consultation booking.
+    - *Impact*: +220% growth in booked initial consultations.
+
+---
+
+## 7. Frequently Asked Questions (Answer Engine Optimized)
+
+### How much does a custom software development project cost?
+**Project costs are established with a fixed-price contract prior to kickoff**, determined by technical scope, integrations, and target milestones. Initial scoping and architecture estimates are 100% free with zero hidden hourly fees or budget surprises, giving your business complete financial predictability.
+
+### How quickly can our software be deployed to production?
+**A production-ready MVP typically launches within 6 to 12 weeks**, with interactive testable releases delivered starting from week two. We operate on 7-day agile sprints with weekly demos and continuous deployment to maximize time-to-market.
+
+### Why choose Nilotech over a large software factory?
+**We provide dedicated senior engineering leadership from start to finish**, eliminating developer turnover and junior handoffs. Clients communicate directly with technical decision-makers and receive post-launch SLA support in under 24 hours.
+
+### Who owns the source code and cloud infrastructure?
+**You maintain 100% ownership of all source code, intellectual property, and cloud accounts from day one.** We deliver clean Git repositories, technical documentation, automated test suites, and zero proprietary lock-in or recurring vendor licensing fees.

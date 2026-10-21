@@ -1,4 +1,4 @@
-import { useRef, Suspense, Component } from 'react';
+import { useRef, Suspense, Component, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 
@@ -132,14 +132,19 @@ function PhoneModel({ imageSrc, isVisible }: { imageSrc: string; isVisible: bool
 export function Phone3D({ imageSrc, className = '' }: Phone3DProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.3 });
+  const [mounted, setMounted] = useState(false);
 
-  // 2D Fallback view if WebGL/Three.js fails or is blocked
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // 2D Fallback view if WebGL/Three.js fails, or during SSR / prerender
   const fallbackView = (
     <div className="w-full h-full flex items-center justify-center p-4">
       <div className="relative w-full max-w-[240px] aspect-[9/18] bg-zinc-900 rounded-[2.5rem] border-4 border-zinc-800 overflow-hidden shadow-2xl flex items-center justify-center">
         <img
           src={imageSrc}
-          alt="App Preview"
+          alt="Nilotech App Preview"
           className="w-full h-full object-cover"
           loading="lazy"
         />
@@ -149,7 +154,9 @@ export function Phone3D({ imageSrc, className = '' }: Phone3DProps) {
 
   return (
     <div ref={containerRef} className={`relative w-full aspect-[9/16] max-w-[320px] mx-auto ${className}`}>
-      {typeof window !== 'undefined' && (
+      {!mounted ? (
+        fallbackView
+      ) : (
         <CanvasErrorBoundary fallback={fallbackView}>
           <Canvas shadows dpr={[1, 2]}>
             <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={50} />

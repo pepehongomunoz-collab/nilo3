@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 import { SectionLabel } from '../ui/SectionLabel';
 import { useLanguage } from '../../context/LanguageContext';
@@ -37,6 +36,7 @@ export function FAQ() {
                 onClick={() => toggle(item.id)}
                 className="w-full py-8 flex items-center justify-between gap-8 group text-left focus-ring"
                 aria-expanded={openId === item.id}
+                aria-controls={`faq-answer-${item.id}`}
               >
                 <h3 className="font-display text-xl md:text-2xl font-bold text-white group-hover:text-signal transition-colors">
                   {item.question}
@@ -50,23 +50,22 @@ export function FAQ() {
                 </div>
               </button>
 
-              <AnimatePresence>
-                {openId === item.id && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <div className="pb-10 max-w-3xl">
-                      <p className="text-zinc-400 leading-relaxed">
-                        {item.answer}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div
+                id={`faq-answer-${item.id}`}
+                role="region"
+                aria-hidden={openId !== item.id}
+                className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  openId === item.id ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="pb-10 max-w-3xl">
+                    <p className="text-zinc-400 leading-relaxed">
+                      {item.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>

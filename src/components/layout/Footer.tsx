@@ -6,10 +6,13 @@ import { LegalModal } from '../ui/LegalModal';
 import { useLanguage } from '../../context/LanguageContext';
 import { getTranslation } from '../../i18n/translations';
 import { trackPixelEvent } from '../../lib/pixel';
+import { seoMeta, languagePath, LANGUAGES } from '../../i18n/seo';
+
+const languageNames = { es: 'Español', en: 'English', pt: 'Português' } as const;
 
 export function Footer() {
   const [legalModalType, setLegalModalType] = useState<'privacy' | 'terms' | null>(null);
-  const { language } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const t = getTranslation(language).footer;
   const navT = getTranslation(language).nav;
 
@@ -39,12 +42,12 @@ export function Footer() {
             <div className="col-span-2 md:col-span-4">
               <Logo size="md" className="mb-4" />
               <p className="text-sm text-zinc-600 max-w-xs leading-relaxed">
-                {t.description}
+                {seoMeta[language].entity}
               </p>
             </div>
 
             <div className="md:col-span-3">
-              <h4 className="section-label mb-4">{t.servicesHeader}</h4>
+              <h2 className="section-label mb-4">{t.servicesHeader}</h2>
               <ul className="space-y-2.5">
                 {t.servicesLinks.map((serviceName, idx) => {
                   const href = footerLinks.services[idx]?.href || '#services';
@@ -60,7 +63,7 @@ export function Footer() {
             </div>
 
             <div className="md:col-span-2">
-              <h4 className="section-label mb-4">{t.companyHeader}</h4>
+              <h2 className="section-label mb-4">{t.companyHeader}</h2>
               <ul className="space-y-2.5">
                 {dynamicCompanyLinks.map((link) => (
                   <li key={link.href}>
@@ -77,7 +80,7 @@ export function Footer() {
             </div>
 
             <div className="md:col-span-3">
-              <h4 className="section-label mb-4">{t.contactHeader}</h4>
+              <h2 className="section-label mb-4">{t.contactHeader}</h2>
               <ul className="space-y-2.5 text-sm text-zinc-500">
                 <li>
                   <a
@@ -109,6 +112,24 @@ export function Footer() {
             <p className="text-zinc-700 text-xs">
               &copy; {new Date().getFullYear()} {company.name}. {t.rights}
             </p>
+            <nav aria-label="Idioma / Language" className="flex gap-4 text-xs text-zinc-700">
+              {LANGUAGES.map((lang) => (
+                <a
+                  key={lang}
+                  href={languagePath(lang)}
+                  hrefLang={seoMeta[lang].hreflang}
+                  lang={seoMeta[lang].htmlLang}
+                  aria-current={lang === language ? 'page' : undefined}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setLanguage(lang);
+                  }}
+                  className={lang === language ? 'text-zinc-400' : 'hover:text-zinc-400 transition-colors'}
+                >
+                  {languageNames[lang]}
+                </a>
+              ))}
+            </nav>
             <div className="flex gap-6 text-xs text-zinc-700">
               <button
                 onClick={() => setLegalModalType('privacy')}

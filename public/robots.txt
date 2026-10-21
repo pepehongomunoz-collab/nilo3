@@ -1,4 +1,35 @@
+# Search engines
 User-agent: *
 Allow: /
 
+# AI / answer engines — explicitly allowed so Nilotech can be cited
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://nilotech.online/sitemap.xml
+
+# LLM context (llmstxt.org)
+# Full factual knowledge base for generative search engines & AI crawlers
+# https://nilotech.online/llms.txt
+# https://nilotech.online/llms-full.txt

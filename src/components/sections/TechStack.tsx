@@ -3,7 +3,7 @@ import { Marquee } from '../ui/Marquee';
 import { SectionLabel } from '../ui/SectionLabel';
 import { techCategories, techMarquee } from '../../data/technologies';
 import { Phone3D } from '../ui/Phone3D';
-import uiPhoneImg from '../../assets/images/3d/ui_phone_app.png';
+import uiPhoneImg from '../../assets/images/3d/ui_phone_app.webp';
 import { useLanguage } from '../../context/LanguageContext';
 import { getTranslation } from '../../i18n/translations';
 

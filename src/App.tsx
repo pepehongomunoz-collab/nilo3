@@ -1,22 +1,20 @@
-import { lazy, Suspense } from 'react';
 import { SmoothScroll } from './components/layout/SmoothScroll';
 import { CustomCursor } from './components/layout/CustomCursor';
 import { Navbar } from './components/layout/Navbar';
 import { Hero } from './components/sections/Hero';
 import { Manifesto } from './components/sections/Manifesto';
 
-// Below-the-fold lazy sections with isolated Suspense boundaries.
-const Cases = lazy(() => import('./components/sections/Cases').then(m => ({ default: m.Cases })));
-const Process = lazy(() => import('./components/sections/Process').then(m => ({ default: m.Process })));
-const Services = lazy(() => import('./components/sections/Services').then(m => ({ default: m.Services })));
-const TechStack = lazy(() => import('./components/sections/TechStack').then(m => ({ default: m.TechStack })));
-const Numbers = lazy(() => import('./components/sections/Numbers').then(m => ({ default: m.Numbers })));
-const Testimonials = lazy(() => import('./components/sections/Testimonials').then(m => ({ default: m.Testimonials })));
-const FAQ = lazy(() => import('./components/sections/FAQ').then(m => ({ default: m.FAQ })));
-const CallToAction = lazy(() => import('./components/sections/CallToAction').then(m => ({ default: m.CallToAction })));
-const Contact = lazy(() => import('./components/sections/Contact').then(m => ({ default: m.Contact })));
-const Footer = lazy(() => import('./components/layout/Footer').then(m => ({ default: m.Footer })));
-const FloatingContact = lazy(() => import('./components/ui/FloatingContact').then(m => ({ default: m.FloatingContact })));
+import { Services } from './components/sections/Services';
+import { Process } from './components/sections/Process';
+import { Cases } from './components/sections/Cases';
+import { TechStack } from './components/sections/TechStack';
+import { Numbers } from './components/sections/Numbers';
+import { Testimonials } from './components/sections/Testimonials';
+import { FAQ } from './components/sections/FAQ';
+import { CallToAction } from './components/sections/CallToAction';
+import { Contact } from './components/sections/Contact';
+import { Footer } from './components/layout/Footer';
+import { FloatingContact } from './components/ui/FloatingContact';
 
 function App() {
   return (
@@ -33,65 +31,43 @@ function App() {
 
         {/* Main content */}
         <main id="main-content">
-          {/* Scene 1: The Statement — eager */}
+          {/* Scene 1: The Statement */}
           <Hero />
 
-          {/* Scene 2: The Provocation — short tagline, stays as transition */}
+          {/* Scene 2: The Provocation */}
           <Manifesto />
 
-          {/* Scene 3: The Capabilities (moved up — the user wants to know WHAT we do before HOW) */}
-          <Suspense fallback={null}>
-            <Services />
-          </Suspense>
+          {/* Scene 3: The Capabilities */}
+          <Services />
 
           {/* Scene 4: The Method */}
-          <Suspense fallback={null}>
-            <Process />
-          </Suspense>
+          <Process />
 
           {/* Scene 5: The Proof */}
-          <Suspense fallback={null}>
-            <Cases />
-          </Suspense>
+          <Cases />
 
-          {/* Scene 6: The Stack (Three.js) */}
-          <Suspense fallback={null}>
-            <TechStack />
-          </Suspense>
+          {/* Scene 6: The Stack */}
+          <TechStack />
 
           {/* Scene 7: The Numbers */}
-          <Suspense fallback={null}>
-            <Numbers />
-          </Suspense>
+          <Numbers />
 
           {/* Scene 8: The Voices */}
-          <Suspense fallback={null}>
-            <Testimonials />
-          </Suspense>
+          <Testimonials />
 
-          {/* Scene 8.5: FAQ — objection handling */}
-          <Suspense fallback={null}>
-            <FAQ />
-          </Suspense>
+          {/* Scene 8.5: FAQ */}
+          <FAQ />
 
           {/* Scene 9: The Invitation */}
-          <Suspense fallback={null}>
-            <CallToAction />
-          </Suspense>
+          <CallToAction />
 
           {/* Contact */}
-          <Suspense fallback={null}>
-            <Contact />
-          </Suspense>
+          <Contact />
         </main>
 
         {/* Footer & Floating CTA */}
-        <Suspense fallback={null}>
-          <Footer />
-        </Suspense>
-        <Suspense fallback={null}>
-          <FloatingContact />
-        </Suspense>
+        <Footer />
+        <FloatingContact />
       </div>
     </SmoothScroll>
   );

@@ -158,18 +158,17 @@ export function Hero() {
 
     const words = headline.querySelectorAll('.hero-word');
 
-    gsap.set(words, { y: '110%', opacity: 0 });
-
-    const tl = gsap.timeline({ delay: 0.3 });
-    tl.to(words, {
-      y: '0%',
-      opacity: 1,
+    const anim = gsap.from(words, {
+      y: '110%',
+      opacity: 0,
       duration: 1,
       stagger: 0.08,
       ease: 'expo.out',
+      delay: 0.2,
+      clearProps: 'all',
     });
 
-    return () => { tl.kill(); };
+    return () => { anim.kill(); };
   }, [language]);
 
   const scrollTo = useCallback((id: string) => {
@@ -268,15 +267,15 @@ export function Hero() {
           ref={headlineRef}
           className="hero-text font-display text-hero font-bold leading-[1.1] md:leading-[0.95] tracking-tight text-white mb-6 flex flex-wrap justify-center gap-x-[0.2em] gap-y-[0.1em]"
         >
-          <div className="overflow-hidden inline-block">
+          <span className="overflow-hidden inline-block">
             <span className="hero-word block">{t.titlePart1}</span>
-          </div>
-          <div className="overflow-hidden inline-block">
+          </span>
+          <span className="overflow-hidden inline-block">
             <span className="hero-word block">{t.titlePart2}</span>
-          </div>
-          <div className="overflow-hidden inline-block">
+          </span>
+          <span className="overflow-hidden inline-block">
             <span className="hero-word text-signal block translate-y-[0.05em] scale-90">{t.titlePart3}</span>
-          </div>
+          </span>
         </h1>
 
         <p className="hero-subtitle text-zinc-400 text-lg md:text-xl max-w-lg mx-auto font-medium mb-12">

@@ -1,0 +1,54 @@
+# Nilotech
+
+> Nilotech es una empresa de desarrollo de software a medida con base en Buenos Aires, Argentina, fundada en 2020. Diseña y construye productos digitales, sistemas internos, automatizaciones de procesos, integraciones entre plataformas y soluciones de IA aplicada para empresas de Argentina y Latinoamérica. Trabaja con presupuesto cerrado, un equipo senior estable y entregas semanales.
+
+- Sitio: https://nilotech.online/ (español) · https://nilotech.online/en/ (English) · https://nilotech.online/pt/ (Português)
+- Email: desarrollos@nilotech.online
+- WhatsApp / Teléfono: +54 9 11 3326-8922
+- Instagram: https://www.instagram.com/desarrollo.web.nilo.tech/
+- Ubicación: Buenos Aires, Argentina · Trabajo remoto con clientes de toda Latinoamérica
+- Idiomas de atención: español, inglés, portugués
+
+## Servicios
+
+- **Productos digitales**: plataformas, apps y herramientas desde cero (diseño de producto, UX/UI, desarrollo full-stack, prototipado, lanzamiento).
+- **Software a medida**: sistemas internos, ERPs, CRMs, sistemas de punto de venta (POS) y herramientas operativas adaptadas al flujo de trabajo de cada empresa.
+- **Automatización de procesos**: eliminación de tareas manuales con workflows automáticos, reportes y alertas (Node.js, Python, Make, Zapier, Cloud Functions).
+- **Integraciones**: conexión de ERPs, CRMs, pasarelas de pago y logística vía APIs REST/GraphQL, webhooks y ETL.
+- **IA aplicada**: chatbots y asistentes inteligentes, análisis predictivo, NLP, computer vision y automatización con IA.
+- **Desarrollo web**: sitios corporativos, e-commerce y landing pages con Core Web Vitals en verde y SEO técnico.
+- **Publicidad digital**: campañas de performance en Meta Ads, A/B testing y embudos de conversión.
+
+## Stack tecnológico
+
+React, Next.js, TypeScript, Node.js, Python, PostgreSQL, APIs REST/GraphQL, servicios cloud, desarrollo mobile (Android) e integración de modelos de IA.
+
+## Cómo trabaja
+
+1. Descubrimiento → 2. Arquitectura → 3. Diseño → 4. Desarrollo → 5. Testing → 6. Lanzamiento → 7. Evolución.
+Sprints semanales con entregas incrementales: el cliente ve avances reales desde la segunda semana.
+
+## Preguntas frecuentes
+
+- **¿Cuánto cuesta un proyecto a medida?** Depende del alcance, las integraciones y el plazo. Nilotech entrega un presupuesto cerrado antes de empezar, sin horas extra facturadas, y la estimación inicial es gratuita.
+- **¿En cuánto tiempo está listo?** Un MVP suele estar en producción entre 6 y 12 semanas.
+- **¿Por qué Nilotech y no una software factory grande?** El mismo equipo senior trabaja de principio a fin, el cliente habla directo con quien toma las decisiones técnicas y, después del lanzamiento, el soporte responde en menos de 24 h.
+
+## Casos de éxito reales (selección)
+
+- **ESI en Secundaria** (Plataforma educativa & E-learning, https://esiensecundaria.com.ar/): portal de recursos didácticos, cuadernillos y tienda online para más de 3.000 docentes.
+- **App Club Jorge Newbery** (App Android & Web, https://temporary-brisk-cerulean-e6k12zr.vercel.app/): ecosistema móvil para socios, carnet digital interactivo, pago de cuotas y tienda oficial.
+- **Lic. Mayra Biondo — Psicóloga** (Salud clínica privada, https://mayrabiondopsicologa.vercel.app/): landing page de alta conversión para práctica clínica privada y agenda de sesiones.
+- **Lumux Detailing** (Estética automotriz premium, https://car-detail-omega.vercel.app/): cotizador interactivo por pack de servicio y reservas a domicilio.
+- **NOVA Obras & Remodelación** (Arquitectura & construcción, https://lp-remodelaciones.vercel.app/): sitio institucional con cotizador interactivo en 24 h y portfolio antes/después.
+- **Victoria Emefer — Cuidados** (Salud & enfermería, https://victoria-emefer.vercel.app/): plataforma de cuidado domiciliario y atención de guardias médicas 24/7.
+- **Nanda Sacerdotisa** (Terapias holísticas, https://lp-nanda-sacerdotisa.vercel.app/): marca personal, reserva de sesiones de tarot y venta de talleres y cursos.
+- **Granja El Trébol** (E-commerce de alimentos, https://demopolloyhuevo.vercel.app/): venta directa y recurrente de pollos de campo y huevos con entrega domiciliaria.
+- **Z&B Domótica & Industria** (Automatización & IoT, https://zb-three-pearl.vercel.app/): telemetría, tableros industriales y domótica residencial de alta complejidad.
+- **Mundo Guau** (Veterinaria & Pet Shop, https://mundo-guau.vercel.app/): turnera online 24/7 para peluquería canina, consultorio y tienda online de nutrición.
+- **Celpe-Bras Simulador** (Plataforma EdTech, https://celpe.vercel.app/): simulador cronometrado oficial para el examen internacional de proficiencia en portugués.
+- **Nutrición Integral +40** (Salud & Nutrición, https://nutricionista-lime-three.vercel.app/): landing page y embudo para método nutricional personalizado con más de 30.000 mujeres impactadas.
+
+## Datos clave
+
+- Más de 15 proyectos entregados · 100 % desarrollo a medida · Lighthouse 95+ · respuesta en menos de 24 h.

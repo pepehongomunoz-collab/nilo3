@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
+import { SITE_URL, seoMeta, languagePath, languageFromPath } from '../i18n/seo';
 
 
 export type Language = 'es' | 'en' | 'pt';
@@ -13,14 +14,17 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 const STORAGE_KEY = 'nilotech_lang';
 
-export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+/**
+ * The URL is the source of truth for the language (/, /en/, /pt/) so each
+ * version is indexable and matches the prerendered HTML (no hydration mismatch).
+ */
+export const LanguageProvider: React.FC<{ children: ReactNode; initialLanguage?: Language }> = ({
+  children,
+  initialLanguage,
+}) => {
   const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(STORAGE_KEY) as Language;
-      if (saved && ['es', 'en', 'pt'].includes(saved)) {
-        return saved;
-      }
-    }
+    if (initialLanguage) return initialLanguage;
+    if (typeof window !== 'undefined') return languageFromPath(window.location.pathname);
     return 'es';
   });
 
@@ -28,41 +32,41 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     setLanguageState(lang);
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, lang);
+      const path = languagePath(lang);
+      if (window.location.pathname !== path) {
+        window.history.pushState({ lang }, '', path + window.location.hash);
+      }
     }
   };
 
+  // Keep state in sync with browser back/forward navigation
   useEffect(() => {
-    document.documentElement.lang = language;
-    // Sync social preview meta tags with the active language
-    const meta: Record<Language, { title: string; description: string }> = {
-      es: {
-        title: 'Nilotech — Partner Tecnológico · Productos Digitales',
-        description: 'Diseñamos el software que mueve empresas. Productos digitales, automatización e IA aplicada.',
-      },
-      en: {
-        title: 'Nilotech — Technology Partner · Digital Products',
-        description: 'We build the software that drives businesses. Digital products, automation and applied AI.',
-      },
-      pt: {
-        title: 'Nilotech — Parceiro Tecnológico · Produtos Digitais',
-        description: 'Projetamos o software que move empresas. Produtos digitais, automação e IA aplicada.',
-      },
-    };
-    const setMeta = (selector: string, attr: string, value: string) => {
+    const onPop = () => setLanguageState(languageFromPath(window.location.pathname));
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  useEffect(() => {
+    const m = seoMeta[language];
+    document.documentElement.lang = m.htmlLang;
+    document.title = m.title;
+
+    const setAttr = (selector: string, attr: string, value: string) => {
       const el = document.head.querySelector(selector);
       if (el) el.setAttribute(attr, value);
     };
-    const metaAttr = (sel: string, attr: string) =>
-      meta[language].title && setMeta(sel, attr, meta[language].title);
+    const url = SITE_URL + languagePath(language);
+    setAttr('meta[name="description"]', 'content', m.description);
+    setAttr('link[rel="canonical"]', 'href', url);
     // Open Graph
-    setMeta('meta[property="og:title"]', 'content', meta[language].title);
-    setMeta('meta[property="og:description"]', 'content', meta[language].description);
+    setAttr('meta[property="og:title"]', 'content', m.ogTitle);
+    setAttr('meta[property="og:description"]', 'content', m.ogDescription);
+    setAttr('meta[property="og:url"]', 'content', url);
+    setAttr('meta[property="og:locale"]', 'content', m.ogLocale);
     // Twitter
-    setMeta('meta[name="twitter:title"]', 'content', meta[language].title);
-    setMeta('meta[name="twitter:description"]', 'content', meta[language].description);
-    // Document title
-    document.title = meta[language].title + ' · Software a Medida';
-    void metaAttr;
+    setAttr('meta[name="twitter:title"]', 'content', m.ogTitle);
+    setAttr('meta[name="twitter:description"]', 'content', m.ogDescription);
+    setAttr('meta[name="twitter:url"]', 'content', url);
   }, [language]);
 
   return (

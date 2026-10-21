@@ -70,7 +70,7 @@ export function Numbers() {
             {numbersData.map((num) => (
               <div key={num.label} className="text-center">
                 <div className="font-display text-5xl md:text-6xl font-bold text-white mb-2">
-                  <span className="counter-value">0</span>
+                  <span className="counter-value">{num.value}</span>
                   <span className="text-signal">{num.suffix}</span>
                 </div>
                 <div className="text-sm text-zinc-600">{num.label}</div>

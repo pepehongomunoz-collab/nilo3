@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { cases } from '../../data/cases';
 import { SectionLabel } from '../ui/SectionLabel';
+import { ExternalLink } from 'lucide-react';
 import { useGSAP } from '../../hooks/useGSAP';
 import { gsap } from '../../lib/gsap';
 import { useLanguage } from '../../context/LanguageContext';
@@ -95,59 +96,79 @@ export function Cases() {
                 }`}>
                   {/* Image */}
                   <div className={`${index % 2 === 0 ? 'lg:col-span-7' : 'lg:col-span-7 lg:col-start-6'}`}>
-                    <div
-                      className="case-image relative aspect-[16/10] rounded-xl overflow-hidden bg-surface"
-                    >
-                      {originalProject.image ? (
-                        <img
-                          src={originalProject.image}
-                          alt={translatedProject.title}
-                          loading="lazy"
-                          decoding="async"
-                          className={`absolute inset-0 w-full h-full opacity-90 transition-transform duration-1000 group-hover:scale-105 ${
-                            translatedProject.category.includes('Android') || translatedProject.category.includes('Aplicación') || translatedProject.category.includes('App')
-                              ? 'object-contain p-6 md:p-12 drop-shadow-2xl scale-110'
-                              : 'object-cover object-top'
-                          }`}
-                        />
-                      ) : (
-                        // Placeholder for cases without a dedicated screenshot
-                        <div
-                          className="absolute inset-0 flex items-center justify-center transition-transform duration-1000 group-hover:scale-105"
-                          style={{
-                            background:
-                              'radial-gradient(ellipse at 30% 20%, rgba(255,210,0,0.06) 0%, transparent 60%),' +
-                              'radial-gradient(ellipse at 70% 80%, rgba(255,107,53,0.05) 0%, transparent 60%),' +
-                              'linear-gradient(135deg, #141419 0%, #0C0C10 100%)',
-                          }}
+                    {(() => {
+                      const ImageWrapper = originalProject.url ? 'a' : 'div';
+                      const linkProps = originalProject.url
+                        ? { href: originalProject.url, target: '_blank', rel: 'noopener noreferrer' }
+                        : {};
+                      return (
+                        <ImageWrapper
+                          {...linkProps}
+                          className="case-image block relative aspect-[16/10] rounded-xl overflow-hidden bg-surface group/img"
                         >
-                          <div className="flex flex-col items-center gap-4">
-                            <div className="w-20 h-20 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md flex items-center justify-center">
-                              <span className="font-display text-3xl font-bold text-signal/80">
-                                {translatedProject.title
-                                  .split(' ')
-                                  .slice(0, 2)
-                                  .map((w) => w.charAt(0))
-                                  .join('')
-                                  .toUpperCase()}
-                              </span>
+                          {originalProject.image ? (
+                            <img
+                              src={originalProject.image}
+                              alt={`${translatedProject.title} — ${translatedProject.category} | Nilotech`}
+                              width="1280"
+                              height="800"
+                              loading="lazy"
+                              decoding="async"
+                              className={`absolute inset-0 w-full h-full opacity-90 transition-transform duration-1000 group-hover:scale-105 ${
+                                translatedProject.category.includes('Android') || translatedProject.category.includes('Aplicación') || translatedProject.category.includes('App')
+                                  ? 'object-contain p-6 md:p-12 drop-shadow-2xl scale-110'
+                                  : 'object-cover object-top'
+                              }`}
+                            />
+                          ) : (
+                            <div
+                              className="absolute inset-0 flex items-center justify-center transition-transform duration-1000 group-hover:scale-105"
+                              style={{
+                                background:
+                                  'radial-gradient(ellipse at 30% 20%, rgba(255,210,0,0.06) 0%, transparent 60%),' +
+                                  'radial-gradient(ellipse at 70% 80%, rgba(255,107,53,0.05) 0%, transparent 60%),' +
+                                  'linear-gradient(135deg, #141419 0%, #0C0C10 100%)',
+                              }}
+                            >
+                              <div className="flex flex-col items-center gap-4">
+                                <div className="w-20 h-20 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md flex items-center justify-center">
+                                  <span className="font-display text-3xl font-bold text-signal/80">
+                                    {translatedProject.title
+                                      .split(' ')
+                                      .slice(0, 2)
+                                      .map((w) => w.charAt(0))
+                                      .join('')
+                                      .toUpperCase()}
+                                  </span>
+                                </div>
+                                <span className="text-xs font-mono tracking-wider text-zinc-600 uppercase">
+                                  {originalProject.image ? '' : 'Case study'}
+                                </span>
+                              </div>
                             </div>
-                            <span className="text-xs font-mono tracking-wider text-zinc-600 uppercase">
-                              {originalProject.image ? '' : 'Case study'}
+                          )}
+                          {/* Subtle overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-void-950/80 via-void-950/20 to-transparent pointer-events-none" />
+
+                          {/* Category badge */}
+                          <div className="absolute top-5 left-5 z-10">
+                            <span className="text-xs font-mono tracking-wider uppercase text-signal/90 bg-void/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-signal/20">
+                              {translatedProject.category}
                             </span>
                           </div>
-                        </div>
-                      )}
-                      {/* Subtle overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-void-950/80 via-void-950/20 to-transparent pointer-events-none" />
-                      
-                      {/* Category badge */}
-                      <div className="absolute top-5 left-5 z-10">
-                        <span className="text-xs font-mono tracking-wider uppercase text-signal/90 bg-void/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-signal/20">
-                          {translatedProject.category}
-                        </span>
-                      </div>
-                    </div>
+
+                          {/* Hover chip for live project */}
+                          {originalProject.url && (
+                            <div className="absolute bottom-4 right-4 z-10 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 pointer-events-none">
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-void/90 backdrop-blur-md text-signal text-xs font-mono border border-signal/30 shadow-lg">
+                                <span>{language === 'pt' ? 'Abrir site' : language === 'en' ? 'Open site' : 'Abrir sitio'}</span>
+                                <ExternalLink className="w-3 h-3" />
+                              </span>
+                            </div>
+                          )}
+                        </ImageWrapper>
+                      );
+                    })()}
                   </div>
 
                   {/* Content */}
@@ -169,7 +190,7 @@ export function Cases() {
                     </div>
 
                     {/* Technologies */}
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {originalProject.technologies.map((tech) => (
                         <span
                           key={tech}
@@ -179,6 +200,25 @@ export function Cases() {
                         </span>
                       ))}
                     </div>
+
+                    {/* Live link button */}
+                    {originalProject.url && (
+                      <a
+                        href={originalProject.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-signal/30 bg-signal/5 hover:bg-signal/15 hover:border-signal text-signal text-xs font-mono tracking-wider uppercase transition-all duration-300 group/btn"
+                      >
+                        <span>
+                          {language === 'pt'
+                            ? 'Ver projeto online'
+                            : language === 'en'
+                            ? 'Visit live project'
+                            : 'Ver proyecto online'}
+                        </span>
+                        <ExternalLink className="w-3.5 h-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </article>

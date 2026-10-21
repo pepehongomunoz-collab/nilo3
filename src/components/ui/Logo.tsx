@@ -18,11 +18,19 @@ export function Logo({ size = 'md', className }: LogoProps) {
     lg: 'h-12 w-auto',
   };
 
+  const pixelDimensions = {
+    sm: { width: 24, height: 24 },
+    md: { width: 32, height: 32 },
+    lg: { width: 48, height: 48 },
+  };
+
   return (
     <div className={clsx('flex items-center gap-1', className)}>
       <img 
         src="/images/Logo.png" 
-        alt="Nilotech Logo" 
+        alt="Nilotech" 
+        width={pixelDimensions[size].width}
+        height={pixelDimensions[size].height}
         className={imageSizes[size]}
       />
       <div className={clsx('font-display font-bold tracking-tight', sizes[size])}>
