@@ -102,7 +102,35 @@ export function Footer() {
                     {company.phone}
                   </a>
                 </li>
-                <li className="text-zinc-600">{company.location}</li>
+                <li>
+                  <a
+                    href={company.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors link-underline"
+                  >
+                    LinkedIn
+                  </a>
+                  <span className="text-zinc-700 mx-2">·</span>
+                  <a
+                    href={company.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors link-underline"
+                  >
+                    Instagram
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={company.googleMaps}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors link-underline"
+                  >
+                    {company.location} (Google Maps)
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

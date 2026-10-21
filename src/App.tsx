@@ -10,6 +10,7 @@ import { Cases } from './components/sections/Cases';
 import { TechStack } from './components/sections/TechStack';
 import { Numbers } from './components/sections/Numbers';
 import { Testimonials } from './components/sections/Testimonials';
+import { Comparison } from './components/sections/Comparison';
 import { FAQ } from './components/sections/FAQ';
 import { CallToAction } from './components/sections/CallToAction';
 import { Contact } from './components/sections/Contact';
@@ -55,7 +56,10 @@ function App() {
           {/* Scene 8: The Voices */}
           <Testimonials />
 
-          {/* Scene 8.5: FAQ */}
+          {/* Scene 8.5: The Comparison */}
+          <Comparison />
+
+          {/* Scene 8.6: FAQ */}
           <FAQ />
 
           {/* Scene 9: The Invitation */}

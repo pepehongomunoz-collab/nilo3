@@ -110,6 +110,22 @@ export interface TranslationSchema {
       company: string;
     }>;
   };
+  comparison: {
+    label: string;
+    title: string;
+    subtitle: string;
+    colNilotech: string;
+    colAgency: string;
+    colFreelancer: string;
+    badgeRecommended: string;
+    features: Array<{
+      id: string;
+      title: string;
+      nilotech: string;
+      agency: string;
+      freelancer: string;
+    }>;
+  };
   faq: {
     label: string;
     title: string;
@@ -491,6 +507,52 @@ export const translations: Record<Language, TranslationSchema> = {
           author: 'Mayra Biondo',
           role: 'Lic. en Psicología',
           company: 'Psicología Clínica',
+        },
+      ],
+    },
+    comparison: {
+      label: 'Comparativa',
+      title: '¿Por qué elegir Nilotech?',
+      subtitle: 'La diferencia entre una software factory masiva, un freelancer y un equipo senior dedicado.',
+      colNilotech: 'Nilotech',
+      colAgency: 'Software Factory Tradicional',
+      colFreelancer: 'Freelancer',
+      badgeRecommended: 'Recomendado',
+      features: [
+        {
+          id: 'pricing',
+          title: 'Presupuesto y Costos',
+          nilotech: 'Presupuesto cerrado garantizado. Cero costos sorpresa ni horas extra facturadas.',
+          agency: 'Tarifas por hora variables con sobrecostos frecuentes de alcance.',
+          freelancer: 'Estimaciones imprecisas sin garantías financieras de entrega.',
+        },
+        {
+          id: 'team',
+          title: 'Equipo de Desarrollo',
+          nilotech: 'Ingenieros senior dedicados de inicio a fin. Hablás directo con quien programa.',
+          agency: 'Rotación alta de desarrolladores; proyectos derivados a perfiles junior.',
+          freelancer: 'Una sola persona sin respaldo para contingencias o ausencias.',
+        },
+        {
+          id: 'speed',
+          title: 'Velocidad y Entregas',
+          nilotech: 'Sprints ágiles de 7 días con avances testeables desde la semana 2. MVP en 6-12 semanas.',
+          agency: 'Ciclos burocráticos lentos (3 a 6 meses para ver un primer release).',
+          freelancer: 'Prazos impredecibles y disponibilidad intermitente según demanda.',
+        },
+        {
+          id: 'ownership',
+          title: 'Propiedad del Código',
+          nilotech: '100% tuyo: repositorios Git, infra cloud y propiedad intelectual sin regalías.',
+          agency: 'Riesgo de vendor lock-in o licencias de plataforma propietarias.',
+          freelancer: 'Código sin documentación estándar ni testing automatizado.',
+        },
+        {
+          id: 'support',
+          title: 'Soporte Post-Lanzamiento',
+          nilotech: 'SLA con respuesta garantizada en menos de 24 horas directamente con el equipo.',
+          agency: 'Mesas de ayuda lentas con sistema de tickets y demoras de días.',
+          freelancer: 'Soporte no garantizado una vez finalizado el pago del proyecto.',
         },
       ],
     },
@@ -900,6 +962,52 @@ export const translations: Record<Language, TranslationSchema> = {
         },
       ],
     },
+    comparison: {
+      label: 'Comparison',
+      title: 'Why Choose Nilotech?',
+      subtitle: 'The difference between a mass software factory, a freelancer, and a dedicated senior engineering team.',
+      colNilotech: 'Nilotech',
+      colAgency: 'Traditional Agency',
+      colFreelancer: 'Freelancer',
+      badgeRecommended: 'Recommended',
+      features: [
+        {
+          id: 'pricing',
+          title: 'Pricing & Budget',
+          nilotech: 'Guaranteed fixed-price quote. Zero budget surprises or unexpected billed hours.',
+          agency: 'Variable hourly rates with frequent budget overruns and scope disputes.',
+          freelancer: 'Imprecise estimates without contractual delivery guarantees.',
+        },
+        {
+          id: 'team',
+          title: 'Engineering Team',
+          nilotech: 'Dedicated senior engineers from start to finish. Direct communication with the developers.',
+          agency: 'High developer turnover; projects often delegated to junior staff.',
+          freelancer: 'Single person with no backup coverage for contingencies or sick days.',
+        },
+        {
+          id: 'speed',
+          title: 'Velocity & Delivery',
+          nilotech: '7-day agile sprints with testable progress from week 2. Production MVP in 6-12 weeks.',
+          agency: 'Bureaucratic cycles (3 to 6 months before you can test a single release).',
+          freelancer: 'Unpredictable timelines and intermittent availability depending on workload.',
+        },
+        {
+          id: 'ownership',
+          title: 'Code Ownership & IP',
+          nilotech: '100% yours: Git repositories, cloud infrastructure, and intellectual property with zero royalties.',
+          agency: 'Vendor lock-in risks or proprietary platform licensing fees.',
+          freelancer: 'Inconsistent documentation with little to no automated test coverage.',
+        },
+        {
+          id: 'support',
+          title: 'Post-Launch Support',
+          nilotech: 'SLA with under-24-hour response directly from the engineering team.',
+          agency: 'Tiered helpdesks with ticketing queues and multi-day delays.',
+          freelancer: 'No guaranteed support once final payment milestone is processed.',
+        },
+      ],
+    },
     faq: {
       label: 'FAQ',
       title: 'Before reaching out, you might be wondering',
@@ -1303,6 +1411,52 @@ export const translations: Record<Language, TranslationSchema> = {
           author: 'Mayra Biondo',
           role: 'Psicóloga Clínica',
           company: 'Psicologia Clínica',
+        },
+      ],
+    },
+    comparison: {
+      label: 'Comparativo',
+      title: 'Por que escolher a Nilotech?',
+      subtitle: 'A diferença entre uma software factory tradicional, um freelancer e uma equipe sênior dedicada.',
+      colNilotech: 'Nilotech',
+      colAgency: 'Software Factory Tradicional',
+      colFreelancer: 'Freelancer',
+      badgeRecommended: 'Recomendado',
+      features: [
+        {
+          id: 'pricing',
+          title: 'Orçamento e Custos',
+          nilotech: 'Orçamento fechado garantido. Zero custos surpresa e sem cobrança de horas extras.',
+          agency: 'Taxas por hora variáveis com frequentes estouros de orçamento por escopo.',
+          freelancer: 'Estimativas imprecisas sem garantias contratuais de entrega.',
+        },
+        {
+          id: 'team',
+          title: 'Equipe de Desenvolvimento',
+          nilotech: 'Engenheiros seniores dedicados do início ao fim. Conversa direta com quem programa.',
+          agency: 'Alta rotatividade; projetos repassados para desenvolvedores juniores.',
+          freelancer: 'Apenas uma pessoa, sem cobertura para imprevistos ou ausências.',
+        },
+        {
+          id: 'speed',
+          title: 'Velocidade e Entregas',
+          nilotech: 'Sprints ágeis de 7 dias com avanços testáveis a partir da semana 2. MVP em 6-12 semanas.',
+          agency: 'Processos burocráticos e lentos (3 a 6 meses para ver o primeiro release).',
+          freelancer: 'Prazos imprevisíveis e disponibilidade intermitente conforme a demanda.',
+        },
+        {
+          id: 'ownership',
+          title: 'Propriedade do Código',
+          nilotech: '100% seu: repositórios Git, infraestrutura em nuvem e PI sem royalties.',
+          agency: 'Risco de dependência de fornecedor ou licenças de plataformas proprietárias.',
+          freelancer: 'Código sem documentação padronizada e sem testes automatizados.',
+        },
+        {
+          id: 'support',
+          title: 'Suporte Pós-Lançamento',
+          nilotech: 'SLA com resposta garantida em menos de 24 horas diretamente com o time de engenharia.',
+          agency: 'Help desk impessoal com abertura de chamados e dias de espera.',
+          freelancer: 'Suporte não garantido após o pagamento final do projeto.',
         },
       ],
     },

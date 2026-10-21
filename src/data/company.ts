@@ -9,6 +9,8 @@ export const company = {
   domain: 'https://nilotech.online',
   instagram: 'https://www.instagram.com/desarrollo.web.nilo.tech/',
   instagramHandle: '@desarrollo.web.nilo.tech',
+  linkedin: 'https://www.linkedin.com/company/nilotechonline/',
+  googleMaps: 'https://maps.app.goo.gl/C8AyvJV6bdMnkMFq5',
   location: 'Buenos Aires, Argentina',
   founded: '2020',
 } as const;

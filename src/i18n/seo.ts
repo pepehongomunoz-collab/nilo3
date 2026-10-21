@@ -102,6 +102,7 @@ export function buildJsonLd(lang: Language): Record<string, unknown> {
           addressRegion: 'CABA',
           addressCountry: 'AR',
         },
+        hasMap: company.googleMaps,
         areaServed: [
           { '@type': 'Country', name: 'Argentina' },
           { '@type': 'Place', name: 'Latinoamérica' },
@@ -115,7 +116,7 @@ export function buildJsonLd(lang: Language): Record<string, unknown> {
           availableLanguage: ['Spanish', 'English', 'Portuguese'],
           areaServed: ['AR', 'LATAM'],
         },
-        sameAs: [company.instagram, company.whatsapp],
+        sameAs: [company.instagram, company.linkedin, company.googleMaps, company.whatsapp],
         knowsAbout: [
           'Software a medida',
           'Custom software development',
