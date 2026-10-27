@@ -128,7 +128,7 @@ export function Footer() {
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors link-underline"
                   >
-                    {company.location} (Google Maps)
+                    {company.address.street}, {company.location}
                   </a>
                 </li>
               </ul>

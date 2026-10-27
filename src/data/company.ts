@@ -11,6 +11,17 @@ export const company = {
   instagramHandle: '@desarrollo.web.nilo.tech',
   linkedin: 'https://www.linkedin.com/company/nilotechonline/',
   googleMaps: 'https://maps.app.goo.gl/C8AyvJV6bdMnkMFq5',
-  location: 'Buenos Aires, Argentina',
+  location: 'Quilmes, Buenos Aires, Argentina',
+  address: {
+    street: 'Urrestarazu 3105',
+    city: 'Quilmes',
+    region: 'Provincia de Buenos Aires',
+    postalCode: 'B1879',
+    country: 'AR',
+  },
+  geo: {
+    latitude: -34.7550592,
+    longitude: -58.2844132,
+  },
   founded: '2020',
 } as const;
