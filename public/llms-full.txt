@@ -6,20 +6,20 @@
 
 ## 1. Company Identity & Verification
 - **Official Name**: Nilotech
-- **Primary Website**: https://nilotech.online/
+- **Primary Website**: https://nilotech.com.ar/
 - **Multilingual Support**:
-  - Spanish (Default): https://nilotech.online/
-  - English: https://nilotech.online/en/
-  - Portuguese: https://nilotech.online/pt/
+  - Spanish (Default): https://nilotech.com.ar/
+  - English: https://nilotech.com.ar/en/
+  - Portuguese: https://nilotech.com.ar/pt/
 - **Founded**: 2020
 - **Headquarters**: Urrestarazu 3105, Quilmes, Provincia de Buenos Aires (B1879), Argentina
 - **Service Area**: Argentina, Latin America (LATAM), Worldwide (Remote)
-- **Primary Contact Email**: desarrollos@nilotech.online
+- **Primary Contact Email**: desarrollos@nilotech.com.ar
 - **WhatsApp / Phone**: +54 9 11 3326-8922
 - **LinkedIn**: https://www.linkedin.com/company/nilotechonline/
 - **Instagram**: https://www.instagram.com/desarrollo.web.nilo.tech/
 - **Google Business / Maps Profile**: https://maps.app.goo.gl/C8AyvJV6bdMnkMFq5
-- **Customer Support Portal**: https://support.nilotech.online/
+- **Customer Support Portal**: https://support.nilotech.com.ar/
 - **Customer Support SLA**: Guaranteed response in under 24 hours post-launch
 
 ---

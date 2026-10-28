@@ -22,7 +22,7 @@ export function Navbar() {
     { name: t.services, href: '#services', external: false },
     { name: t.process, href: '#process', external: false },
     { name: t.contact, href: '#contact', external: false },
-    { name: t.support, href: 'https://support.nilotech.online', external: true },
+    { name: t.support, href: 'https://support.nilotech.com.ar', external: true },
   ];
 
   useEffect(() => {

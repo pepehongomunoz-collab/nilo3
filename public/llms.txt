@@ -2,8 +2,8 @@
 
 > Nilotech es una empresa de desarrollo de software a medida con base en Buenos Aires, Argentina, fundada en 2020. Diseña y construye productos digitales, sistemas internos, automatizaciones de procesos, integraciones entre plataformas y soluciones de IA aplicada para empresas de Argentina y Latinoamérica. Trabaja con presupuesto cerrado, un equipo senior estable y entregas semanales.
 
-- Sitio: https://nilotech.online/ (español) · https://nilotech.online/en/ (English) · https://nilotech.online/pt/ (Português)
-- Email: desarrollos@nilotech.online
+- Sitio: https://nilotech.com.ar/ (español) · https://nilotech.com.ar/en/ (English) · https://nilotech.com.ar/pt/ (Português)
+- Email: desarrollos@nilotech.com.ar
 - WhatsApp / Teléfono: +54 9 11 3326-8922
 - LinkedIn: https://www.linkedin.com/company/nilotechonline/
 - Instagram: https://www.instagram.com/desarrollo.web.nilo.tech/

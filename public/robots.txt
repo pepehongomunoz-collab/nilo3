@@ -27,9 +27,9 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://nilotech.online/sitemap.xml
+Sitemap: https://nilotech.com.ar/sitemap.xml
 
 # LLM context (llmstxt.org)
 # Full factual knowledge base for generative search engines & AI crawlers
-# https://nilotech.online/llms.txt
-# https://nilotech.online/llms-full.txt
+# https://nilotech.com.ar/llms.txt
+# https://nilotech.com.ar/llms-full.txt

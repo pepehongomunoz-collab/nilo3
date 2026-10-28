@@ -2,7 +2,7 @@ import type { Language } from '../context/LanguageContext';
 import { getTranslation } from './translations';
 import { company } from '../data/company';
 
-export const SITE_URL = 'https://nilotech.online';
+export const SITE_URL = 'https://nilotech.com.ar';
 export const LANGUAGES: Language[] = ['es', 'en', 'pt'];
 
 interface SeoMeta {

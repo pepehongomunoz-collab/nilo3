@@ -21,7 +21,7 @@ export function Footer() {
     { name: navT.projects, href: '#cases', external: false },
     { name: navT.process, href: '#process', external: false },
     { name: navT.contact, href: '#contact', external: false },
-    { name: navT.support, href: 'https://support.nilotech.online', external: true },
+    { name: navT.support, href: 'https://support.nilotech.com.ar', external: true },
   ];
 
   return (
