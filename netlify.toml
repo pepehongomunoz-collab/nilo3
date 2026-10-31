@@ -19,6 +19,22 @@
   to = "/pt/"
   status = 301
 
+[[redirects]]
+  from = "/planemprendedor"
+  to = "/planemprendedor/"
+  status = 301
+
+# Ruta anterior de la landing (links ya compartidos o en anuncios)
+[[redirects]]
+  from = "/web-en-5-dias"
+  to = "/planemprendedor/"
+  status = 301
+
+[[redirects]]
+  from = "/web-en-5-dias/*"
+  to = "/planemprendedor/"
+  status = 301
+
 # No SPA catch-all: unknown URLs get the real 404.html with a 404 status
 # instead of a soft-404 (200 + homepage).
 [[redirects]]

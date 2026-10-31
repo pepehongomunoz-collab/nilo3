@@ -6,7 +6,7 @@
  *   1. vite build                → dist/ (client bundle + index.html template)
  *   2. vite build --ssr ...      → dist-ssr/entry-server.js
  *   3. node scripts/prerender.mjs → dist/index.html, dist/en/index.html, dist/pt/index.html
- *                                   + dist/web-en-5-dias/index.html (landing de anuncios, solo ES, noindex)
+ *                                   + dist/planemprendedor/index.html (landing de anuncios, solo ES, noindex)
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
