@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Logo } from '../ui/Logo';
@@ -8,7 +9,11 @@ import { useLenis } from '../../hooks/useLenis';
 import { useLanguage } from '../../context/LanguageContext';
 import { getTranslation } from '../../i18n/translations';
 
-export function Navbar() {
+/**
+ * standalone: fuera de la home (p. ej. la landing de anuncios). Los links llevan a las secciones
+ * de la home, no hay selector de idioma y `cta` reemplaza al botón de "empezar proyecto".
+ */
+export function Navbar({ standalone = false, cta }: { standalone?: boolean; cta?: ReactNode }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
@@ -65,6 +70,10 @@ export function Navbar() {
 
   const scrollTo = (href: string) => {
     setIsMobileMenuOpen(false);
+    if (standalone) {
+      window.location.href = `/${href}`;
+      return;
+    }
     const target = document.getElementById(href.replace('#', ''));
     if (target) {
       if (lenis) {
@@ -97,9 +106,10 @@ export function Navbar() {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <a
-              href="#"
+              href={standalone ? '/' : '#'}
               aria-label="Nilotech — Inicio"
               onClick={(e) => {
+                if (standalone) return;
                 e.preventDefault();
                 if (lenis) lenis.scrollTo(0);
                 else window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -145,15 +155,17 @@ export function Navbar() {
 
             {/* Desktop Actions (Language Selector + CTA) */}
             <div className="hidden lg:flex items-center gap-4">
-              <LanguageSelector />
-              <Button size="sm" onClick={() => scrollTo('#contact')}>
-                {t.startProject}
-              </Button>
+              {!standalone && <LanguageSelector />}
+              {cta ?? (
+                <Button size="sm" onClick={() => scrollTo('#contact')}>
+                  {t.startProject}
+                </Button>
+              )}
             </div>
 
             {/* Mobile Actions */}
             <div className="flex lg:hidden items-center gap-3">
-              <LanguageSelector />
+              {!standalone && <LanguageSelector />}
               <button
                 className="text-zinc-400 hover:text-white p-2 focus-ring rounded-lg"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -217,9 +229,11 @@ export function Navbar() {
                   transition={{ delay: 0.3 }}
                   className="pt-8 flex flex-col gap-4"
                 >
-                  <Button size="lg" className="w-full" onClick={() => scrollTo('#contact')}>
-                    {t.startProject}
-                  </Button>
+                  {cta ?? (
+                    <Button size="lg" className="w-full" onClick={() => scrollTo('#contact')}>
+                      {t.startProject}
+                    </Button>
+                  )}
                 </motion.div>
               </div>
             </motion.div>

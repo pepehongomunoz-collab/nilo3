@@ -10,7 +10,8 @@ interface LanguageContextType {
   setLanguage: (lang: Language) => void;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+// Exportado para páginas sueltas que fijan el idioma sin tocar URL ni metadatos (landing de anuncios)
+export const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'nilotech_lang';
 
