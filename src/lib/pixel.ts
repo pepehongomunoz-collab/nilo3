@@ -25,3 +25,16 @@ export function trackPixelEvent(
     }
   }
 }
+
+/**
+ * Tracks a Meta Pixel custom event (names outside Meta's standard list must use trackCustom).
+ */
+export function trackPixelCustomEvent(event: string, data?: Record<string, unknown>): void {
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    try {
+      window.fbq('trackCustom', event, data);
+    } catch (err) {
+      console.warn('[Meta Pixel] Failed to track custom event:', event, err);
+    }
+  }
+}

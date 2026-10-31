@@ -1,3 +1,5 @@
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import type { RefObject } from 'react';
 import {
   ArrowRight,
   Check,
@@ -18,11 +20,37 @@ import { MegaphoneHero } from '../components/ui/MegaphoneHero';
 import { extraSites, publishedSites, type PromoSite } from '../data/promoSites';
 import { company } from '../data/company';
 import { testimonials } from '../data/testimonials';
-import { trackPixelEvent } from '../lib/pixel';
+import { trackPixelCustomEvent, trackPixelEvent } from '../lib/pixel';
 
-const whatsappHref = `${company.whatsapp}?text=${encodeURIComponent(
-  'Quiero más info del Plan Emprendedor'
-)}`;
+const WHATSAPP_MESSAGE = 'Quiero más info del Plan Emprendedor';
+
+/**
+ * Referencia del anuncio que trajo al visitante (utm_content o utm_campaign del link de Meta).
+ * Viaja en el mensaje de WhatsApp para saber qué anuncio generó cada conversación.
+ */
+function readAdRef(): string | null {
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get('utm_content') ?? params.get('utm_campaign');
+  if (!raw) return null;
+  const ref = raw.replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
+  return ref || null;
+}
+
+function whatsappHrefFor(ref: string | null) {
+  const text = ref ? `${WHATSAPP_MESSAGE} (ref. ${ref})` : WHATSAPP_MESSAGE;
+  return `${company.whatsapp}?text=${encodeURIComponent(text)}`;
+}
+
+// Se completa después de hidratar para no desfasar el HTML prerenderizado
+const AdRefContext = createContext<string | null>(null);
+
+function useWhatsApp(location: string) {
+  const ref = useContext(AdRefContext);
+  return {
+    href: whatsappHrefFor(ref),
+    onClick: () => trackPixelEvent('Contact', { method: 'whatsapp', location, ...(ref ? { ad_ref: ref } : {}) }),
+  };
+}
 
 const includes = [
   { icon: Smartphone, title: 'Diseño profesional para celular', text: 'Se ve bien en cualquier pantalla, que es donde te buscan tus clientes.' },
@@ -39,8 +67,8 @@ const steps = [
   { icon: Rocket, title: 'En 5 días está online', text: 'Con tu dominio, lista para compartir.' },
 ];
 
-// Actualizar a mano cada mes (o sacar si ya no aplica)
-const SPOTS = { left: 10, month: 'noviembre' };
+// Actualizar a mano cada mes. Pasado `until` el aviso se oculta solo para no mostrar un dato vencido.
+const SPOTS = { left: 10, month: 'noviembre', until: '2026-11-30' };
 
 const marqueeItems = ['Primero la ves', 'Después pagás', 'Online en 5 días', 'Dominio + hosting de regalo'];
 
@@ -75,12 +103,13 @@ function WhatsAppCta({
   const colors = onYellow
     ? `bg-void-950 text-signal hover:bg-void-700 ${darkFocus}`
     : 'bg-signal text-void-950 hover:bg-signal-dim focus-ring';
+  const whatsapp = useWhatsApp(location);
   return (
     <a
-      href={whatsappHref}
+      href={whatsapp.href}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackPixelEvent('Contact', { method: 'whatsapp', location })}
+      onClick={whatsapp.onClick}
       className={`group inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 text-[15px] font-semibold transition-all hover:-translate-y-0.5 ${colors} ${className}`}
     >
       <MessageCircle size={18} aria-hidden="true" />
@@ -122,6 +151,11 @@ function SiteCard({ site }: { site: PromoSite }) {
 }
 
 function SpotsLeft({ className = '', dark = false }: { className?: string; dark?: boolean }) {
+  const [expired, setExpired] = useState(false);
+  useEffect(() => {
+    setExpired(Date.now() > new Date(`${SPOTS.until}T23:59:59-03:00`).getTime());
+  }, []);
+  if (expired) return null;
   return (
     <p className={`flex items-center gap-2 text-sm font-semibold ${dark ? 'text-zinc-200' : 'text-void-950'} ${className}`}>
       <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
@@ -194,19 +228,45 @@ function PriceBadge({ className = '' }: { className?: string }) {
   );
 }
 
+// Cualquier clic del nav o del footer que no sea WhatsApp saca al visitante de la landing
+function useTrackLandingExits(rootRef: RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest('a, button');
+      if (!link || !link.closest('nav, footer')) return;
+      const href = link.getAttribute('href') ?? '';
+      if (href.includes('wa.me') || link.getAttribute('aria-controls') === 'mobile-menu') return;
+      const label = (link.textContent ?? '').trim().slice(0, 40) || link.getAttribute('aria-label') || 'link';
+      trackPixelCustomEvent('LandingExit', { link: label, area: link.closest('footer') ? 'footer' : 'nav' });
+    };
+    root.addEventListener('click', onClick);
+    return () => root.removeEventListener('click', onClick);
+  }, [rootRef]);
+}
+
 export function WebPromo() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [adRef, setAdRef] = useState<string | null>(null);
+  useEffect(() => setAdRef(readAdRef()), []);
+  useTrackLandingExits(rootRef);
+
   return (
-    <div className="min-h-screen overflow-x-clip bg-void text-white">
+    <AdRefContext.Provider value={adRef}>
+    <div ref={rootRef} className="min-h-screen overflow-x-clip bg-void text-white">
       {/* Nav oficial del sitio; el CTA es WhatsApp y los links llevan a la home */}
       <LanguageContext.Provider value={PROMO_LANGUAGE}>
         <Navbar
           standalone
           cta={
             <a
-              href={whatsappHref}
+              href={whatsappHrefFor(adRef)}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackPixelEvent('Contact', { method: 'whatsapp', location: 'web_promo_header' })}
+              onClick={() =>
+                trackPixelEvent('Contact', { method: 'whatsapp', location: 'web_promo_header', ...(adRef ? { ad_ref: adRef } : {}) })
+              }
               className="inline-flex items-center justify-center gap-2 rounded-full bg-signal px-4 py-2 text-sm font-semibold text-void-950 transition-colors hover:bg-signal-dim focus-ring"
             >
               <MessageCircle size={16} aria-hidden="true" />
@@ -458,10 +518,12 @@ export function WebPromo() {
       {/* Barra fija en celular: el CTA siempre a mano */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/[0.06] bg-void/90 p-3 backdrop-blur-xl md:hidden">
         <a
-          href={whatsappHref}
+          href={whatsappHrefFor(adRef)}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackPixelEvent('Contact', { method: 'whatsapp', location: 'web_promo_sticky' })}
+          onClick={() =>
+            trackPixelEvent('Contact', { method: 'whatsapp', location: 'web_promo_sticky', ...(adRef ? { ad_ref: adRef } : {}) })
+          }
           className="flex items-center justify-center gap-2 rounded-full bg-signal py-3.5 font-semibold text-void-950 focus-ring"
         >
           <MessageCircle size={18} aria-hidden="true" />
@@ -469,5 +531,6 @@ export function WebPromo() {
         </a>
       </div>
     </div>
+    </AdRefContext.Provider>
   );
 }
