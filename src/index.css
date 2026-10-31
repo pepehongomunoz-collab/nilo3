@@ -218,3 +218,28 @@ textarea:-webkit-autofill:active {
     -webkit-text-fill-color: var(--text-primary) !important;
     transition: background-color 5000s ease-in-out 0s;
 }
+
+/* ─────────────────────────────────────────────────
+   LANDING PLAN EMPRENDEDOR (/web-en-5-dias/)
+   La pieza central es un video renderizado en Blender (MegaphoneVideo.tsx).
+   ───────────────────────────────────────────────── */
+.wp-spin {
+  animation: wp-spin 22s linear infinite;
+}
+@keyframes wp-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Aparición al hacer scroll (solo navegadores con scroll-driven animations;
+   el resto ve el contenido directamente). */
+@supports (animation-timeline: view()) {
+  .wp-reveal {
+    animation: wp-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 25%;
+  }
+}
+@keyframes wp-reveal {
+  from { opacity: 0; transform: translateY(48px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}

@@ -1,17 +1,28 @@
-import { StrictMode } from 'react';
+import { StrictMode, type ReactNode } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import './index.css';
-import App from './App';
-import { LanguageProvider } from './context/LanguageContext';
+import { WEB_PROMO_PATH } from './lib/routes';
 
-const container = document.getElementById('root')!;
-const app = (
-  <StrictMode>
+// La landing de anuncios no necesita Three.js ni GSAP: cada página carga solo su bundle.
+async function loadPage(): Promise<ReactNode> {
+  if (window.location.pathname.startsWith(WEB_PROMO_PATH.slice(0, -1))) {
+    const { WebPromo } = await import('./pages/WebPromo');
+    return <WebPromo />;
+  }
+
+  const [{ default: App }, { LanguageProvider }] = await Promise.all([
+    import('./App'),
+    import('./context/LanguageContext'),
+  ]);
+  return (
     <LanguageProvider>
       <App />
     </LanguageProvider>
-  </StrictMode>
-);
+  );
+}
+
+const container = document.getElementById('root')!;
+const app = <StrictMode>{await loadPage()}</StrictMode>;
 
 // Production HTML is prerendered (scripts/prerender.mjs) → hydrate it.
 // In dev the root is empty → regular client render.
