@@ -2,6 +2,20 @@
   command = "npm run build"
   publish = "dist"
 
+# Dominio anterior: redirigir todo a nilotech.com.ar (los alias de Netlify
+# sirven el sitio con 200 si no hay una regla explícita)
+[[redirects]]
+  from = "https://nilotech.online/*"
+  to = "https://nilotech.com.ar/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.nilotech.online/*"
+  to = "https://nilotech.com.ar/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/api/send-email"
   to = "/.netlify/functions/send-email"
