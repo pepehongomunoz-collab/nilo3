@@ -17,6 +17,7 @@ import { Footer } from '../components/layout/Footer';
 import { Navbar } from '../components/layout/Navbar';
 import { LanguageContext } from '../context/LanguageContext';
 import { MegaphoneHero } from '../components/ui/MegaphoneHero';
+import { QuickLeadForm } from '../components/ui/QuickLeadForm';
 import { extraSites, publishedSites, type PromoSite } from '../data/promoSites';
 import { company } from '../data/company';
 import { testimonials } from '../data/testimonials';
@@ -502,6 +503,12 @@ export function WebPromo() {
               </ul>
               <SpotsLeft className="mt-8 justify-center" dark />
               <WhatsAppCta location="web_promo_footer" className="mt-5" />
+
+              <div className="mx-auto mt-10 flex max-w-xl items-center gap-4 text-xs uppercase tracking-widest text-zinc-500" aria-hidden="true">
+                <span className="h-px flex-1 bg-white/10" />o
+                <span className="h-px flex-1 bg-white/10" />
+              </div>
+              <QuickLeadForm service="Plan Emprendedor" adRef={adRef} className="mt-6" />
             </div>
           </div>
         </section>
